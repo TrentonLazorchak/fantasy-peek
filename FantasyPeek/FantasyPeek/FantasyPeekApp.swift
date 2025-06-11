@@ -12,7 +12,7 @@ import SwiftData
 struct FantasyPeekApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            HomeView(viewModel: .init())
         }
     }
 }

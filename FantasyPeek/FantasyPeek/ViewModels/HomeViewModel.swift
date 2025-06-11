@@ -22,12 +22,12 @@ struct LeagueInfoViewModel {
 @Observable @MainActor
 final class HomeViewModel {
 
-    let manager: SleeperManaging
+    let sleeperManager: SleeperManaging
     init(manager: SleeperManaging = SleeperManager()) {
-        self.manager = manager
+        self.sleeperManager = manager
     }
 
-    let leagueID: String = ""
+    var leagueId: String = ""
     var leagueInfo: LeagueInfoViewModel?
 
     var viewState: ViewState = .loaded
@@ -38,10 +38,11 @@ final class HomeViewModel {
     }
 
     func fetchSleeperLeagueInfo() async {
+        leagueInfo = nil
         viewState = .loading
 
         do {
-            let sleeperLeagueInfo = try await manager.fetchLeagueInfo(leagueID: leagueID)
+            let sleeperLeagueInfo = try await sleeperManager.fetchLeagueInfo(leagueID: leagueId)
             leagueInfo = .init(sleeperLeagueInfo: sleeperLeagueInfo)
             viewState = .loaded
             // TODO: Navigate to tab bar of pages as listed in notes

@@ -6,18 +6,18 @@
 //
 
 struct SleeperLeagueInfoModel: Codable {
-    let leagueId: String
+    let leagueID: String
     let name: String
     let totalRosters: Int
     let status: String?
     let sport: String?
     let season: String?
     let seasonType: String?
-    let draftId: String?
-    let previousLeagueId: String?
+    let draftID: String?
+    let previousLeagueID: String?
     let avatar: String?
-    let companyId: String?
-    let loserBracketId: String?
+    let companyID: String?
+    let loserBracketID: Int?
 
     let rosterPositions: [String]?
     let metadata: [String: String]?
@@ -25,18 +25,18 @@ struct SleeperLeagueInfoModel: Codable {
     let settings: SleeperLeagueSettings?
 
     enum CodingKeys: String, CodingKey {
-        case leagueId = "league_id"
+        case leagueID = "league_id"
         case name
         case totalRosters = "total_rosters"
         case status
         case sport
         case season
         case seasonType = "season_type"
-        case draftId = "draft_id"
-        case previousLeagueId = "previous_league_id"
+        case draftID = "draft_id"
+        case previousLeagueID = "previous_league_id"
         case avatar
-        case companyId = "company_id"
-        case loserBracketId = "loser_bracket_id"
+        case companyID = "company_id"
+        case loserBracketID = "loser_bracket_id"
         case rosterPositions = "roster_positions"
         case metadata
         case scoringSettings = "scoring_settings"
@@ -65,5 +65,13 @@ struct SleeperLeagueSettings: Codable {
         case waiverDayOfWeek = "waiver_day_of_week"
         case type
         case tradeReviewDays = "trade_review_days"
+    }
+}
+
+struct SleeperUser: Codable {
+    let userID: String
+
+    enum CodingKeys: String, CodingKey {
+        case userID = "user_id"
     }
 }

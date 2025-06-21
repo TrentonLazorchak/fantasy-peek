@@ -13,21 +13,21 @@ struct LeagueInfoViewModel {
     let totalRosters: Int
 
     init(sleeperLeagueInfo: SleeperLeagueInfoModel) {
-        id = sleeperLeagueInfo.leagueId
+        id = sleeperLeagueInfo.leagueID
         name = sleeperLeagueInfo.name
         totalRosters = sleeperLeagueInfo.totalRosters
     }
 }
 
 @Observable @MainActor
-final class HomeViewModel {
+final class LeagueInputViewModel {
 
     let sleeperManager: SleeperManaging
     init(manager: SleeperManaging = SleeperManager()) {
         self.sleeperManager = manager
     }
 
-    var leagueId: String = ""
+    var leagueID: String = ""
     var leagueInfo: LeagueInfoViewModel?
 
     var viewState: ViewState = .loaded
@@ -42,7 +42,7 @@ final class HomeViewModel {
         viewState = .loading
 
         do {
-            let sleeperLeagueInfo = try await sleeperManager.fetchLeagueInfo(leagueID: leagueId)
+            let sleeperLeagueInfo = try await sleeperManager.fetchLeagueInfo(leagueID: leagueID)
             leagueInfo = .init(sleeperLeagueInfo: sleeperLeagueInfo)
             viewState = .loaded
             // TODO: Navigate to tab bar of pages as listed in notes

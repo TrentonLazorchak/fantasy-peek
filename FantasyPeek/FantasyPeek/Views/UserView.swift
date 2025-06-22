@@ -50,7 +50,7 @@ struct UserView: View {
 
                     Spacer()
                 }
-                .navigationTitle("League Lookup")
+                .navigationTitle("Leagues for User")
                 .padding()
 
                 if viewModel.viewState == .loading {

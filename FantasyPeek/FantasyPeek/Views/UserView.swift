@@ -22,13 +22,25 @@ struct UserView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
 
+                    Text("Selected Year: \(viewModel.selectedYear)")
+                        .font(.headline)
+
+                    Picker("Select Year", selection: $viewModel.selectedYear) {
+                        ForEach(UserViewModel.selectableYears, id: \.self) { year in
+                            Text(year).tag(year)
+                        }
+                    }
+                    .pickerStyle(.wheel) // .menu or .segmented also available
+                    .frame(maxHeight: 150)
+
                     Button("Load Sleeper Leagues") {
                         Task {
                             await viewModel.fetchSleeperLeaguesWithUID()
                         }
                     }
 
-                    if let leagues = viewModel.leagues {
+                    if let leagues = viewModel.leagues,
+                       viewModel.viewState == .loaded {
                         List {
                             ForEach(leagues, id: \.id) { league in
                                 // TODO: Nav link to tab bar view

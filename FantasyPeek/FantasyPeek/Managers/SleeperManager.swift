@@ -12,7 +12,7 @@ protocol SleeperManaging {
     func fetchLeagueInfo(leagueID: String) async throws -> SleeperLeagueInfoModel
     func fetchAllRosters(leagueID: String) async throws -> [SleeperRosterModel]
     func fetchDisplayName(userID: String) async throws -> String
-    func fetchAllNFLPlayers() async throws -> [SleeperPlayersResponse]
+    func fetchAllNFLPlayers() async throws -> SleeperPlayersResponse
 }
 
 extension SleeperManaging {
@@ -46,8 +46,8 @@ final class SleeperManager: SleeperManaging {
         try await fetchUser(user: userID).displayName
     }
 
-    func fetchAllNFLPlayers() async throws -> [SleeperPlayersResponse] {
-        try await fetch(urlString: "\(Self.baseURL)/players/nfl", as: [SleeperPlayersResponse].self, useCache: true)
+    func fetchAllNFLPlayers() async throws -> SleeperPlayersResponse {
+        try await fetch(urlString: "\(Self.baseURL)/players/nfl", as: SleeperPlayersResponse.self, useCache: true)
     }
 
     private func fetch<T: Codable>(urlString: String, as type: T.Type, useCache: Bool = false) async throws -> T {

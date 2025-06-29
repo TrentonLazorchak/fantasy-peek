@@ -44,7 +44,7 @@ struct UserView: View {
                         List {
                             ForEach(leagues, id: \.id) { league in
                                 NavigationLink {
-                                    TabBarView()
+                                    TabBarView(leagueID: league.id)
                                 } label: {
                                     IndividualLeagueView(leagueName: league.name, leagueAvatar: league.avatar)
                                 }
@@ -65,10 +65,7 @@ struct UserView: View {
                 .padding()
 
                 if viewModel.viewState == .loading {
-                    Rectangle()
-                        .ignoresSafeArea()
-                        .foregroundStyle(.black.opacity(0.3))
-                    ProgressView()
+                    LoadingView()
                 }
             }
         }

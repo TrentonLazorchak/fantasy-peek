@@ -35,7 +35,7 @@ final class UserViewModel {
         viewState = .loading
 
         do {
-            if let sleeperLeagues = try await sleeperManager.fetchAllLeagues(for: username, season: selectedYear) {
+            if let sleeperLeagues = try await sleeperManager.fetchAllLeagues(username: username, season: selectedYear) {
                 leagues = sleeperLeagues.map { league in
                         .init(sleeperLeagueInfo: league)
                 }

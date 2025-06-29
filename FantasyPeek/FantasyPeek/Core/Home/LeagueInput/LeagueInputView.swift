@@ -30,7 +30,7 @@ struct LeagueInputView: View {
 
                     if let leagueInfo = viewModel.leagueInfo {
                         NavigationLink {
-                            TabBarView()
+                            TabBarView(leagueID: leagueInfo.id)
                         } label: {
                             IndividualLeagueView(leagueName: leagueInfo.name, leagueAvatar: leagueInfo.avatar)
                         }
@@ -46,10 +46,7 @@ struct LeagueInputView: View {
                 .padding()
 
                 if viewModel.viewState == .loading {
-                    Rectangle()
-                        .ignoresSafeArea()
-                        .foregroundStyle(.black.opacity(0.3))
-                    ProgressView()
+                    LoadingView()
                 }
             }
         }

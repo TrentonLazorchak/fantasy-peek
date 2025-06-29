@@ -8,23 +8,33 @@
 import SwiftUI
 
 struct TabBarView: View {
+
+    let leagueID: String
+
     var body: some View {
         TabView {
             Tab("Roster", systemImage: "person.3.fill") {
-                Text("Roster View")
+                NavigationView {
+                    RostersView(viewModel: .init(leagueID: leagueID))
+                }
             }
 
             Tab("League", systemImage: "trophy") {
-                Text("League View")
+                NavigationView {
+                    Text("League View")
+                }
             }
 
             Tab("Settings", systemImage: "gear") {
-                Text("Settings View")
+                NavigationView {
+                    Text("Settings View")
+                }
             }
         }
     }
+
 }
 
 #Preview {
-    TabBarView()
+    TabBarView(leagueID: "1182862660101533696")
 }

@@ -1,2 +1,2 @@
 # fantasy-peek
-A SwiftUI application giving a user a peek into their fantasy leagues.
+A iOS 26 SwiftUI application giving a user a peek into their fantasy leagues, and including other fun features.

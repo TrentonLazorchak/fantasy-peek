@@ -10,12 +10,12 @@ import Observation
 struct LeagueInfoViewModel {
     let id: String
     let name: String
-    let totalRosters: Int
+    let avatar: String?
 
     init(sleeperLeagueInfo: SleeperLeagueInfoModel) {
         id = sleeperLeagueInfo.leagueID
         name = sleeperLeagueInfo.name
-        totalRosters = sleeperLeagueInfo.totalRosters
+        avatar = "https://sleepercdn.com/avatars/thumbs/\(sleeperLeagueInfo.avatar ?? "")"
     }
 }
 

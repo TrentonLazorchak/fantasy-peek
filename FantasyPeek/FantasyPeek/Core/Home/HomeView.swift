@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        // TODO: Tab bar view will show this as a sheet. Then after select league we'll dismiss and load tab bar view
         NavigationStack {
             VStack {
                 Text("Welcome to FantasyPeek!")

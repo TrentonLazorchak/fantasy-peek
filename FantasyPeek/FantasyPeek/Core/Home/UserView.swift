@@ -43,12 +43,11 @@ struct UserView: View {
                        viewModel.viewState == .loaded {
                         List {
                             ForEach(leagues, id: \.id) { league in
-                                // TODO: Nav link to tab bar view
-                                VStack(spacing: 10) {
-                                    Text("Sleeper League Name: \(league.name)")
-                                    Text("# of Teams: \(league.totalRosters)")
+                                NavigationLink {
+                                    TabBarView()
+                                } label: {
+                                    IndividualLeagueView(leagueName: league.name, leagueAvatar: league.avatar)
                                 }
-                                .padding()
                             }
                         }
                     } else if viewModel.viewState == .empty {

@@ -28,13 +28,12 @@ struct LeagueInputView: View {
                         }
                     }
 
-                    // TODO: Probably not show this but instead just go to tab bar view
                     if let leagueInfo = viewModel.leagueInfo {
-                        VStack(spacing: 10) {
-                            Text("Sleeper League Name: \(leagueInfo.name)")
-                            Text("# of Teams: \(leagueInfo.totalRosters)")
+                        NavigationLink {
+                            TabBarView()
+                        } label: {
+                            IndividualLeagueView(leagueName: leagueInfo.name, leagueAvatar: leagueInfo.avatar)
                         }
-                        .padding()
                     } else if viewModel.viewState == .failure {
                         Text("There was an error loading the sleeper league info.")
                             .foregroundColor(.red)

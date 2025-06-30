@@ -196,23 +196,21 @@ struct PlayerView: View {
 
             Spacer()
 
-            if let team {
-                ZStack {
+            ZStack {
+                if let team {
                     Rectangle()
                         .foregroundStyle(team.mainColor)
                     Text(team.fullName)
                         .foregroundStyle(.white)
-                }
-                .frame(width: 100, height: 50)
-            } else {
-                ZStack {
+                } else {
                     Rectangle()
                         .foregroundStyle(NFLTeam.unknown.mainColor)
                     Text(NFLTeam.unknown.rawValue)
                         .foregroundStyle(.white)
                 }
-                .frame(width: 100, height: 50)
             }
+            .multilineTextAlignment(.center)
+            .frame(width: 100, height: 50)
         }
         .font(.subheadline)
     }

@@ -10,63 +10,62 @@ import SwiftUI
 struct UserView: View {
 
     @State var viewModel: UserViewModel
+    @Binding var leagueID: String?
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                VStack(spacing: 20) {
-                    Text("Find Your Leagues")
-                        .font(.title)
+        ZStack {
+            VStack(spacing: 20) {
+                Text("Find Your Leagues")
+                    .font(.title)
 
-                    TextField("Enter Sleeper Username", text: $viewModel.username)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
+                TextField("Enter Sleeper Username", text: $viewModel.username)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
 
-                    Text("Selected Year: \(viewModel.selectedYear)")
-                        .font(.headline)
+                Text("Selected Year: \(viewModel.selectedYear)")
+                    .font(.headline)
 
-                    Picker("Select Year", selection: $viewModel.selectedYear) {
-                        ForEach(UserViewModel.selectableYears, id: \.self) { year in
-                            Text(year).tag(year)
-                        }
+                Picker("Select Year", selection: $viewModel.selectedYear) {
+                    ForEach(UserViewModel.selectableYears, id: \.self) { year in
+                        Text(year).tag(year)
                     }
-                    .pickerStyle(.wheel) // .menu or .segmented also available
-                    .frame(maxHeight: 150)
+                }
+                .pickerStyle(.wheel) // .menu or .segmented also available
+                .frame(maxHeight: 150)
 
-                    Button("Load Sleeper Leagues") {
-                        Task {
-                            await viewModel.fetchSleeperLeaguesWithUID()
-                        }
+                Button("Load Sleeper Leagues") {
+                    Task {
+                        await viewModel.fetchSleeperLeaguesWithUID()
                     }
+                }
 
-                    if let leagues = viewModel.leagues,
-                       viewModel.viewState == .loaded {
-                        List {
-                            ForEach(leagues, id: \.id) { league in
-                                NavigationLink {
-                                    TabBarView(leagueID: league.id)
-                                } label: {
-                                    IndividualLeagueView(leagueName: league.name, leagueAvatar: league.avatar)
-                                }
+                if let leagues = viewModel.leagues,
+                   viewModel.viewState == .loaded {
+                    List {
+                        ForEach(leagues, id: \.id) { league in
+                            Button {
+                                leagueID = league.id
+                            } label: {
+                                IndividualLeagueView(leagueName: league.name, leagueAvatar: league.avatar)
                             }
                         }
-                    } else if viewModel.viewState == .empty {
-                        Text("No leagues returned")
-                            .padding()
-                    } else if viewModel.viewState == .failure {
-                        Text("There was an error loading the sleeper user info.")
-                            .foregroundColor(.red)
-                            .padding()
                     }
-
-                    Spacer()
+                } else if viewModel.viewState == .empty {
+                    Text("No leagues returned")
+                        .padding()
+                } else if viewModel.viewState == .failure {
+                    Text("There was an error loading the sleeper user info.")
+                        .foregroundColor(.red)
+                        .padding()
                 }
-                .navigationTitle("Leagues for User")
-                .padding()
 
-                if viewModel.viewState == .loading {
-                    LoadingView()
-                }
+                Spacer()
+            }
+            .navigationTitle("Leagues for User")
+            .padding()
+
+            if viewModel.viewState == .loading {
+                LoadingView()
             }
         }
     }
@@ -74,5 +73,5 @@ struct UserView: View {
 }
 
 #Preview {
-    UserView(viewModel: .init())
+    UserView(viewModel: .init(), leagueID: .constant(nil))
 }

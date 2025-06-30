@@ -14,19 +14,19 @@ struct TabBarView: View {
     var body: some View {
         TabView {
             Tab("Roster", systemImage: "person.3.fill") {
-                NavigationView {
+                NavigationStack {
                     RostersView(viewModel: .init(leagueID: leagueID))
                 }
             }
 
             Tab("League", systemImage: "trophy") {
-                NavigationView {
+                NavigationStack {
                     Text("League View")
                 }
             }
 
             Tab("Settings", systemImage: "gear") {
-                NavigationView {
+                NavigationStack {
                     Text("Settings View")
                 }
             }

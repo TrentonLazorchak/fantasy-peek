@@ -20,6 +20,7 @@ struct TeamViewModel {
 }
 
 struct PlayerViewModel {
+    let playerID: String
     let name: String?
     let position: String?
     let team: String?
@@ -48,6 +49,9 @@ final class RostersViewModel {
     var teams: [TeamViewModel] = []
     var selectedRosterIndex: Int = 0
 
+    // Used for the Tab View to start animation
+    var didFinishLoading: Bool = false
+
     func fetchRosters(isRefresh: Bool) async {
         viewState = isRefresh ? .loading : .initial
 
@@ -70,14 +74,16 @@ final class RostersViewModel {
                 if let rosterStarters = roster.starters {
                     starters = rosterStarters.compactMap { starter in
                         guard let player = nflPlayers[starter] else { return nil }
-                        return PlayerViewModel(name: player.fullName, position: player.position, team: player.team)
+                        return PlayerViewModel(playerID: player.playerID, name: player.fullName, position: player.position, team: player.team)
                     }
                 }
                 var bench: [PlayerViewModel] = []
                 if let players = roster.players {
                     bench = players.compactMap { player in
                         guard let nflPlayer = nflPlayers[player] else { return nil }
-                        return PlayerViewModel(name: nflPlayer.fullName, position: nflPlayer.position, team: nflPlayer.team)
+                        // Don't include starters to the bench
+                        guard !starters.contains(where: { $0.playerID == nflPlayer.playerID }) else { return nil }
+                        return PlayerViewModel(playerID: nflPlayer.playerID, name: nflPlayer.fullName, position: nflPlayer.position, team: nflPlayer.team)
                     }
                 }
 
@@ -100,6 +106,7 @@ final class RostersViewModel {
             }
             teams = newTeams
             viewState = .loaded
+            didFinishLoading = true
         } catch {
             print("Error: \(error.localizedDescription)")
             viewState = .failure

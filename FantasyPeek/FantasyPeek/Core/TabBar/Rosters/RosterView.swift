@@ -13,12 +13,13 @@ struct RosterView: View {
 
     var body: some View {
         VStack {
-            Text("\(team.userDisplayName)'s Team")
-                .font(.headline)
-
-            Button("Generate Team Name") {
+            Button("Have AI Generate a Team Name") {
                 // TODO: Foundational Models call to create team name
             }
+
+            // TODO: Generated team name here
+
+            // TODO: Rate my team
 
             List {
                 Section("Starters") {
@@ -34,12 +35,14 @@ struct RosterView: View {
                 }
             }
         }
+        .navigationTitle("\(team.userDisplayName)'s Team")
+        .navigationBarTitleDisplayMode(.inline)
     }
 
 }
 
 #Preview {
-    let player: PlayerViewModel = .init(name: "Trenton Lazorchak", position: "QB", team: "WAS")
+    let player: PlayerViewModel = .init(playerID: "1234", name: "Trenton Lazorchak", position: "QB", team: "WAS")
     RosterView(team: .init(
         userDisplayName: "TrentonLaz",
         starters: Array(repeating: player, count: 8),

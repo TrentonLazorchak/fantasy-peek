@@ -43,7 +43,6 @@ final class UserViewModel {
                 viewState = .empty
             }
             viewState = leagues?.isEmpty != false ? .empty : .loaded
-            // TODO: Show list of leagues, on selection, show tab bar view
         } catch {
             viewState = .failure
         }

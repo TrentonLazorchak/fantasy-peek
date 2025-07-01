@@ -18,13 +18,19 @@ struct IndividualLeagueView: View {
                 image
                     .resizable()
             } placeholder: {
-                // TODO: Probably just like the sleeper logo
-                Circle()
+                ZStack {
+                    Circle()
+                        .foregroundStyle(.black)
+                    Image(systemName: "american.football.fill")
+                        .foregroundStyle(.white)
+                }
+
             }
             .frame(width: 50, height: 50)
 
             Text("\(leagueName)")
                 .font(.headline)
+                .foregroundStyle(.black)
         }
     }
 }

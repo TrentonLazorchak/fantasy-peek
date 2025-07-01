@@ -45,7 +45,6 @@ final class LeagueInputViewModel {
             let sleeperLeagueInfo = try await sleeperManager.fetchLeagueInfo(leagueID: leagueID)
             leagueInfo = .init(sleeperLeagueInfo: sleeperLeagueInfo)
             viewState = .loaded
-            // TODO: Navigate to tab bar of pages as listed in notes
         } catch {
             viewState = .failure
         }

@@ -11,36 +11,49 @@ struct RostersView: View {
 
     @State var viewModel: RostersViewModel
 
-    // TODO: Switch on view state and add a failure state
     var body: some View {
         ZStack {
-            VStack {
-                ScrollableTabPicker(
-                    selectedIndex: $viewModel.selectedRosterIndex,
-                    didFinishLoading: $viewModel.didFinishLoading,
-                    items: viewModel.teams.map { $0.userDisplayName }
-                )
+            switch viewModel.viewState {
+            case .initial, .loaded:
+                VStack {
+                    ScrollableTabPicker(
+                        selectedIndex: $viewModel.selectedRosterIndex,
+                        didFinishLoading: $viewModel.didFinishLoading,
+                        items: viewModel.teams.map { $0.userDisplayName }
+                    )
 
-                // Roster Tabs
-                if viewModel.viewState == .initial {
-                    RosterSkeletonView()
-                } else {
-                    TabView(selection: $viewModel.selectedRosterIndex) {
-                        ForEach(viewModel.teams, id: \.id) { team in
-                            RosterView(team: team)
-                                .tag(team.index)
+                    // Roster Tabs
+                    if viewModel.viewState == .initial {
+                        RosterSkeletonView()
+                    } else {
+                        TabView(selection: $viewModel.selectedRosterIndex) {
+                            ForEach(viewModel.teams, id: \.id) { team in
+                                RosterView(team: team)
+                                    .tag(team.index)
+                            }
+                        }
+                        .tabViewStyle(.page(indexDisplayMode: .never))
+                    }
+                }
+            case .empty:
+                VStack {
+                    Text("No Rosters Found")
+                        .font(.title)
+                }
+            case .failure:
+                VStack {
+                    Text("An Error Has Occurred")
+                        .font(.title)
+                    Button("Retry") {
+                        Task {
+                            await viewModel.fetchRosters()
                         }
                     }
-                    .tabViewStyle(.page(indexDisplayMode: .never))
                 }
-            }
-
-            if viewModel.viewState == .loading {
-                LoadingView()
             }
         }
         .task {
-            await viewModel.fetchRosters(isRefresh: false)
+            await viewModel.fetchRosters()
         }
     }
 

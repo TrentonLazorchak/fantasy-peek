@@ -30,9 +30,9 @@ struct PlayerViewModel {
 final class RostersViewModel {
 
     let sleeperManager: SleeperManaging
-    let leagueID: String
+    let leagueID: String?
 
-    init(manager: SleeperManaging = SleeperManager(), leagueID: String) {
+    init(manager: SleeperManaging = SleeperManager(), leagueID: String?) {
         self.sleeperManager = manager
         self.leagueID = leagueID
     }
@@ -40,7 +40,6 @@ final class RostersViewModel {
     var viewState: ViewState = .initial
     enum ViewState {
         case initial
-        case loading
         case loaded
         case empty
         case failure
@@ -52,11 +51,15 @@ final class RostersViewModel {
     // Used for the Tab View to start animation
     var didFinishLoading: Bool = false
 
-    func fetchRosters(isRefresh: Bool) async {
-        viewState = isRefresh ? .loading : .initial
+    func fetchRosters() async {
+        viewState = .initial
 
         do {
             // Call to fetch rosters
+            guard let leagueID else {
+                viewState = .failure
+                return
+            }
             let rosters = try await sleeperManager.fetchAllRosters(leagueID: leagueID)
             var newTeams: [TeamViewModel] = []
 

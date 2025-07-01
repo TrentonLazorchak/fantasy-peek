@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TabBarView: View {
 
-    let leagueID: String
+    @Binding var leagueID: String?
 
     var body: some View {
         TabView {
@@ -27,7 +27,7 @@ struct TabBarView: View {
 
             Tab("Settings", systemImage: "gear") {
                 NavigationStack {
-                    Text("Settings View")
+                    SettingsView(leagueID: $leagueID)
                 }
             }
         }
@@ -36,5 +36,5 @@ struct TabBarView: View {
 }
 
 #Preview {
-    TabBarView(leagueID: "1182862660101533696")
+    TabBarView(leagueID: .constant("1182862660101533696"))
 }

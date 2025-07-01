@@ -16,16 +16,14 @@ struct RootView: View {
         ZStack {
             // Only create the tab bar view when we want to show it, to call on appear when created
             if leagueID != nil {
-                TabBarView(leagueID: leagueID ?? "")
+                TabBarView(leagueID: $leagueID)
             }
         }
         .onAppear {
             showHomeView = leagueID == nil
         }
         .onChange(of: leagueID) {
-            if leagueID != nil {
-                showHomeView = false
-            }
+            showHomeView = leagueID == nil
         }
         .fullScreenCover(isPresented: $showHomeView, content: {
             // If the state variable is true (league is not selected), show the home view

@@ -16,24 +16,40 @@ struct ScrollableTabPicker: View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
-                    ForEach(items.indices, id: \.self) { index in
-                        Text(items[index])
-                            .id(index)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 16)
-                            .background(selectedIndex == index ? Color.blue.opacity(0.2) : Color.clear)
-                            .cornerRadius(8)
-                            .onTapGesture {
-                                selectedIndex = index
-                            }
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(.black, lineWidth: 1)
-                            )
+                    // Show skeleton views if true
+                    if !didFinishLoading {
+                        ForEach(Array(0...8), id: \.self) { _ in
+                            Text("TrentonLaz")
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 16)
+                                .cornerRadius(8)
+                                .redacted(reason: .placeholder)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(.black, lineWidth: 1)
+                                )
+                        }
+                    } else {
+                        ForEach(items.indices, id: \.self) { index in
+                            Text(items[index])
+                                .id(index)
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 16)
+                                .background(selectedIndex == index ? Color.blue.opacity(0.2) : Color.clear)
+                                .cornerRadius(8)
+                                .onTapGesture {
+                                    selectedIndex = index
+                                }
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(.black, lineWidth: 1)
+                                )
+                        }
                     }
                 }
                 .padding()
             }
+            .scrollDisabled(!didFinishLoading)
             .onChange(of: didFinishLoading) {
                 if didFinishLoading {
                     Task {

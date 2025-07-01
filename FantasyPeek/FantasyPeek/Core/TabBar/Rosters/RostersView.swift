@@ -11,6 +11,7 @@ struct RostersView: View {
 
     @State var viewModel: RostersViewModel
 
+    // TODO: Switch on view state and add a failure state
     var body: some View {
         ZStack {
             VStack {
@@ -21,13 +22,17 @@ struct RostersView: View {
                 )
 
                 // Roster Tabs
-                TabView(selection: $viewModel.selectedRosterIndex) {
-                    ForEach(viewModel.teams, id: \.id) { team in
-                        RosterView(team: team)
-                            .tag(team.index)
+                if viewModel.viewState == .initial {
+                    RosterSkeletonView()
+                } else {
+                    TabView(selection: $viewModel.selectedRosterIndex) {
+                        ForEach(viewModel.teams, id: \.id) { team in
+                            RosterView(team: team)
+                                .tag(team.index)
+                        }
                     }
+                    .tabViewStyle(.page(indexDisplayMode: .never))
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
             }
 
             if viewModel.viewState == .loading {

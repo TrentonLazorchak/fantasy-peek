@@ -159,55 +159,41 @@ enum NFLTeam: String, ExpressibleByStringLiteral {
 
 struct PlayerView: View {
 
-    let position: Position?
-    let name: String?
-    let team: NFLTeam?
+    let position: Position
+    let name: String
+    let team: NFLTeam
+
+    init(position: Position?, name: String?, team: NFLTeam?) {
+        self.position = position ?? .unknown
+        self.name = name ?? "Unknown"
+        self.team = team ?? .unknown
+    }
 
     var body: some View {
-        // TODO: HStack, rectangle with different color for position
         HStack {
-            if let position {
-                ZStack {
-                    Rectangle()
-                        .foregroundStyle(position.color)
+            ZStack {
+                Rectangle()
+                    .foregroundStyle(position.color)
 
-                    Text(position.rawValue)
-                        .foregroundStyle(.white)
-                }
-                .frame(width: 50, height: 50)
-            } else {
-                ZStack {
-                    Rectangle()
-                        .foregroundStyle(Position.unknown.color)
-                        .frame(width: 50, height: 50)
-
-                    Text(Position.unknown.rawValue)
-                        .foregroundStyle(.white)
-                }
+                Text(position.rawValue)
+                    .foregroundStyle(.white)
             }
+            .frame(width: 50, height: 50)
 
-            if let name {
-                Text(name)
-            } else if position == .def {
-                Text(team?.fullName ?? "Unknown")
+            // Use team name for the defense
+            if position == .def {
+                Text(team.fullName)
             } else {
-                Text("Unknown")
+                Text(name)
             }
 
             Spacer()
 
             ZStack {
-                if let team {
-                    Rectangle()
-                        .foregroundStyle(team.mainColor)
-                    Text(team.fullName)
-                        .foregroundStyle(.white)
-                } else {
-                    Rectangle()
-                        .foregroundStyle(NFLTeam.unknown.mainColor)
-                    Text(NFLTeam.unknown.rawValue)
-                        .foregroundStyle(.white)
-                }
+                Rectangle()
+                    .foregroundStyle(team.mainColor)
+                Text(team.fullName)
+                    .foregroundStyle(.white)
             }
             .multilineTextAlignment(.center)
             .frame(width: 100, height: 50)

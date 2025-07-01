@@ -52,9 +52,22 @@ struct RostersView: View {
                 }
             }
         }
-        .task {
-            await viewModel.fetchRosters()
+        .onFirstAppear {
+            Task {
+                await viewModel.fetchRosters()
+            }
         }
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                if let userDisplayName = viewModel.selectedTeam?.userDisplayName {
+                    Text("\(userDisplayName)'s Team")
+                } else if viewModel.viewState == .initial {
+                    Text("TrentonLaz's Team")
+                        .redacted(reason: .placeholder)
+                }
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
     }
 
 }

@@ -48,8 +48,17 @@ final class RostersViewModel {
     var teams: [TeamViewModel] = []
     var selectedRosterIndex: Int = 0
 
-    // Used for the Tab View to start animation
+    /// Used for the Tab View to start animation
     var didFinishLoading: Bool = false
+
+    /// The currently selected team
+    var selectedTeam: TeamViewModel? {
+        guard teams.indices.contains(selectedRosterIndex) else {
+            return nil
+        }
+
+        return teams[selectedRosterIndex]
+    }
 
     func fetchRosters() async {
         viewState = .initial

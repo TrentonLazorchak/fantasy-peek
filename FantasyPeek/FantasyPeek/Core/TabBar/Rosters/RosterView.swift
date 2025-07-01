@@ -35,12 +35,6 @@ struct RosterView: View {
                 }
             }
         }
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text("\(team.userDisplayName)'s Team")
-            }
-        }
-        .navigationBarTitleDisplayMode(.inline)
     }
 
 }

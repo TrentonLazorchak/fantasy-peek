@@ -21,7 +21,7 @@ struct TabBarView: View {
 
             Tab("League", systemImage: "trophy") {
                 NavigationStack {
-                    Text("League View")
+                    LeagueView(viewModel: .init(leagueID: leagueID))
                 }
             }
 

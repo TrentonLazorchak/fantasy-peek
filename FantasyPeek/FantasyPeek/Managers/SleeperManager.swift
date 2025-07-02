@@ -11,7 +11,7 @@ protocol SleeperManaging {
     func fetchAllLeagues(username: String, sport: String, season: String) async throws -> [SleeperLeagueInfoModel]?
     func fetchLeagueInfo(leagueID: String) async throws -> SleeperLeagueInfoModel
     func fetchAllRosters(leagueID: String) async throws -> [SleeperRosterModel]
-    func fetchDisplayName(userID: String) async throws -> String
+    func fetchAllUsers(leagueID: String) async throws -> [SleeperUserModel]
     func fetchAllNFLPlayers() async throws -> SleeperPlayersResponse
 }
 
@@ -33,6 +33,11 @@ final class SleeperManager: SleeperManaging {
 
         return try await fetch(urlString: "\(Self.baseURL)/user/\(userID)/leagues/\(sport)/\(season)", as: [SleeperLeagueInfoModel]?.self)
     }
+    
+    // User is user id or username
+    private func fetchUser(user: String) async throws -> SleeperUserModel {
+        try await fetch(urlString: "\(Self.baseURL)/user/\(user)", as: SleeperUserModel.self)
+    }
 
     func fetchLeagueInfo(leagueID: String) async throws -> SleeperLeagueInfoModel {
         try await fetch(urlString: "\(Self.baseURL)/league/\(leagueID)", as: SleeperLeagueInfoModel.self)
@@ -42,8 +47,8 @@ final class SleeperManager: SleeperManaging {
         try await fetch(urlString: "\(Self.baseURL)/league/\(leagueID)/rosters", as: [SleeperRosterModel].self)
     }
 
-    func fetchDisplayName(userID: String) async throws -> String {
-        try await fetchUser(user: userID).displayName
+    func fetchAllUsers(leagueID: String) async throws -> [SleeperUserModel] {
+        try await fetch(urlString: "\(Self.baseURL)/league/\(leagueID)/users", as: [SleeperUserModel].self)
     }
 
     func fetchAllNFLPlayers() async throws -> SleeperPlayersResponse {
@@ -72,14 +77,5 @@ final class SleeperManager: SleeperManaging {
         }
 
         return decoded
-    }
-
-    private func fetchUser(user: String) async throws -> SleeperUserModel {
-        guard let userURL = URL(string: "\(Self.baseURL)/user/\(user)") else {
-            assertionFailure("Invalid user URL")
-            throw URLError(.badURL)
-        }
-        let (userData, _) = try await URLSession.shared.data(from: userURL)
-        return try JSONDecoder().decode(SleeperUserModel.self, from: userData)
     }
 }

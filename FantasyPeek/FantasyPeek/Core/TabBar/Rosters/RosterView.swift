@@ -13,13 +13,14 @@ struct RosterView: View {
 
     var body: some View {
         VStack {
-            Button("Have AI Generate a Team Name") {
+            Button("AI Generate a Team Name") {
                 // TODO: Foundational Models call to create team name
             }
 
             // TODO: Generated team name here
 
-            // TODO: Rate my team
+            // TODO: Rate my team with a sheet that pops up
+            // TODO: AI Rate My Team
 
             List {
                 Section("Starters") {
@@ -45,6 +46,8 @@ struct RosterSkeletonView: View {
     var body: some View {
         RosterView(team: .init(
             userDisplayName: "TrentonLaz",
+            teamName: nil,
+            avatar: nil,
             starters: Array(repeating: Self.mockPlayer, count: 9),
             bench: Array(repeating: Self.mockPlayer, count: 5),
             wins: 10,
@@ -62,6 +65,8 @@ struct RosterSkeletonView: View {
     NavigationView {
         RosterView(team: .init(
             userDisplayName: "TrentonLaz",
+            teamName: nil,
+            avatar: nil,
             starters: Array(repeating: player, count: 8),
             bench: Array(repeating: player, count: 12),
             wins: 12,

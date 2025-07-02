@@ -59,7 +59,9 @@ struct RostersView: View {
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
-                if let userDisplayName = viewModel.selectedTeam?.userDisplayName {
+                if let teamName = viewModel.selectedTeam?.teamName {
+                    Text(teamName)
+                } else if let userDisplayName = viewModel.selectedTeam?.teamName {
                     Text("\(userDisplayName)'s Team")
                 } else if viewModel.viewState == .initial {
                     Text("TrentonLaz's Team")

@@ -5,12 +5,13 @@
 //  Created by Trenton Lazorchak on 6/25/25.
 //
 
-import Observation
 import Foundation
 
 struct TeamViewModel {
     let id: UUID = UUID()
     let userDisplayName: String
+    let teamName: String?
+    let avatar: String?
     let starters: [PlayerViewModel]
     let bench: [PlayerViewModel]
     let wins: Int
@@ -69,60 +70,72 @@ final class RostersViewModel {
                 viewState = .failure
                 return
             }
-            let rosters = try await sleeperManager.fetchAllRosters(leagueID: leagueID)
-            var newTeams: [TeamViewModel] = []
 
-            let nflPlayers = try await sleeperManager.fetchAllNFLPlayers()
-            var index = 0
-            for roster in rosters {
-                // Fetch username from owner id
-                var userDisplayName = "Username"
-                if let ownerID = roster.ownerID {
-                    userDisplayName = try await sleeperManager.fetchDisplayName(userID: ownerID)
-                }
-
-                // Then, map the roster starter ids to starters and players and store
-                var starters: [PlayerViewModel] = []
-                if let rosterStarters = roster.starters {
-                    starters = rosterStarters.compactMap { starter in
-                        guard let player = nflPlayers[starter] else { return nil }
-                        return PlayerViewModel(playerID: player.playerID, name: player.fullName, position: player.position, team: player.team)
-                    }
-                }
-                var bench: [PlayerViewModel] = []
-                if let players = roster.players {
-                    bench = players.compactMap { player in
-                        guard let nflPlayer = nflPlayers[player] else { return nil }
-                        // Don't include starters to the bench
-                        guard !starters.contains(where: { $0.playerID == nflPlayer.playerID }) else { return nil }
-                        return PlayerViewModel(playerID: nflPlayer.playerID, name: nflPlayer.fullName, position: nflPlayer.position, team: nflPlayer.team)
-                    }
-                }
-
-                // Then map wins, losses, and ties (default to 0)
-                let wins = roster.settings?.wins ?? 0
-                let losses = roster.settings?.losses ?? 0
-                let ties = roster.settings?.ties ?? 0
-
-                let team = TeamViewModel(
-                    userDisplayName: userDisplayName,
-                    starters: starters,
-                    bench: bench,
-                    wins: wins,
-                    losses: losses,
-                    ties: ties,
-                    index: index
-                )
-                index += 1
-                newTeams.append(team)
-            }
-            teams = newTeams
+            teams = try await Self.getTeams(sleeperManager: sleeperManager, leagueID: leagueID)
             viewState = .loaded
             didFinishLoading = true
         } catch {
             print("Error: \(error.localizedDescription)")
             viewState = .failure
         }
+    }
+
+    static func getTeams(sleeperManager: SleeperManaging, leagueID: String) async throws -> [TeamViewModel] {
+        let rosters = try await sleeperManager.fetchAllRosters(leagueID: leagueID)
+        let nflPlayers = try await sleeperManager.fetchAllNFLPlayers()
+        let users = try await sleeperManager.fetchAllUsers(leagueID: leagueID)
+
+        var newTeams: [TeamViewModel] = []
+        var index = 0
+        for roster in rosters {
+            let ownerUser = users.first(where: { $0.userID == roster.ownerID })
+
+            // Fetch username from owner id
+            var userDisplayName = "Username"
+            if let ownerID = roster.ownerID,
+               let ownerUser {
+                userDisplayName = ownerUser.displayName
+            }
+
+            // Then, map the roster starter ids to starters and players and store
+            var starters: [PlayerViewModel] = []
+            if let rosterStarters = roster.starters {
+                starters = rosterStarters.compactMap { starter in
+                    guard let player = nflPlayers[starter] else { return nil }
+                    return PlayerViewModel(playerID: player.playerID, name: player.fullName, position: player.position, team: player.team)
+                }
+            }
+            var bench: [PlayerViewModel] = []
+            if let players = roster.players {
+                bench = players.compactMap { player in
+                    guard let nflPlayer = nflPlayers[player] else { return nil }
+                    // Don't include starters to the bench
+                    guard !starters.contains(where: { $0.playerID == nflPlayer.playerID }) else { return nil }
+                    return PlayerViewModel(playerID: nflPlayer.playerID, name: nflPlayer.fullName, position: nflPlayer.position, team: nflPlayer.team)
+                }
+            }
+
+            // Then map wins, losses, and ties (default to 0)
+            let wins = roster.settings?.wins ?? 0
+            let losses = roster.settings?.losses ?? 0
+            let ties = roster.settings?.ties ?? 0
+
+            let team = TeamViewModel(
+                userDisplayName: userDisplayName,
+                teamName: ownerUser?.metadata?.teamName,
+                avatar:  "https://sleepercdn.com/avatars/thumbs/\(ownerUser?.avatar ?? "")",
+                starters: starters,
+                bench: bench,
+                wins: wins,
+                losses: losses,
+                ties: ties,
+                index: index
+            )
+            index += 1
+            newTeams.append(team)
+        }
+
+        return newTeams
     }
 
     // TODO: Separate function one will be to generate a team name using foundational models

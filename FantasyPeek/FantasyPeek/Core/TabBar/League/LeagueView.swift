@@ -121,6 +121,11 @@ struct LeagueView: View {
                 await viewModel.fetchLeagueInfo()
             }
         }
+        .alert(isPresented: $viewModel.showAIErrorAlert) {
+            Alert(title: Text("Error"),
+                  message: Text(viewModel.aiError ?? "An unknown error occurred."),
+                  dismissButton: .default(Text("OK")))
+        }
     }
 
 }

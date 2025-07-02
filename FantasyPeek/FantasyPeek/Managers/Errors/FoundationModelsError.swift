@@ -16,6 +16,7 @@ enum FoundationModelsError: Error {
     // The model is unavailable for an unknown reason.
     case unknown
 
+    // TODO: Should include instructions on how to resolve each
     var localizedDescription: String {
         switch self {
         case .deviceNotEligible:

@@ -32,10 +32,17 @@ final class RosterViewModel {
             let prompt = "Generate a new team name for this team. Only return the generated name of the team."
             let instructions = "You are an AI tool in a fantasy football app. Here is data about the current team: \(team.summary)"
             generatedTeamName = try await foundationModelsManager.sendPrompt(prompt: prompt, instructions: instructions)
+            isAILoading = false
         } catch let error as FoundationModelsError {
             print(error.localizedDescription)
+            aiError = error.localizedDescription
+            showAIErrorAlert = true
+            isAILoading = false
         } catch {
             print(error.localizedDescription)
+            aiError = error.localizedDescription
+            showAIErrorAlert = true
+            isAILoading = false
         }
     }
 }

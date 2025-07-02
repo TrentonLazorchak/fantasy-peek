@@ -69,10 +69,17 @@ final class LeagueViewModel {
             let prompt = "Generate a new team name for this league. Only return the generated name of the league."
             let instructions = "You are an AI tool in a fantasy football app. Here is data about the entire league: \(leagueSummary)"
             generatedLeagueName = try await foundationModelsManager.sendPrompt(prompt: prompt, instructions: instructions)
+            isAILoading = false
         } catch let error as FoundationModelsError {
             print(error.localizedDescription)
+            aiError = error.localizedDescription
+            showAIErrorAlert = true
+            isAILoading = false
         } catch {
             print(error.localizedDescription)
+            aiError = error.localizedDescription
+            showAIErrorAlert = true
+            isAILoading = false
         }
     }
 

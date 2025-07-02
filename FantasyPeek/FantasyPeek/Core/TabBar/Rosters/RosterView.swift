@@ -16,6 +16,8 @@ struct RosterView: View {
             // AI Generate Team Name
             if let generatedTeamName = viewModel.generatedTeamName {
                 Text("Generated Name: \(generatedTeamName)")
+            } else if viewModel.isAILoading {
+                Text("Loading...")
             }
             Button("AI Generate a Team Name") {
                 Task {

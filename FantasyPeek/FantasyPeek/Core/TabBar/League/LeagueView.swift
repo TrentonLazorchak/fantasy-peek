@@ -42,6 +42,12 @@ struct LeagueView: View {
 
                     // Buttons for AI
                     VStack(spacing: 8) {
+                        if let generatedLeagueName = viewModel.generatedLeagueName {
+                            Text("Generated League Name: \(generatedLeagueName)")
+                        } else if viewModel.isAILoading {
+                            Text("Loading...")
+                        }
+
                         Button("Generate League Name") {
                             Task {
                                 await viewModel.generateLeagueName()

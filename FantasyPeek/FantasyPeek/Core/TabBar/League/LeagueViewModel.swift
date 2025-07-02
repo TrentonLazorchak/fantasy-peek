@@ -40,7 +40,7 @@ final class LeagueViewModel {
                 return
             }
             let leagueInfo = try await sleeperManager.fetchLeagueInfo(leagueID: leagueID, useCache: !isRefresh)
-            leagueAvatarURLString = leagueInfo.avatar
+            leagueAvatarURLString = "\(SleeperManager.avatarBaseURL)/\(leagueInfo.avatar ?? "")"
             leagueName = leagueInfo.name
             season = leagueInfo.season
 

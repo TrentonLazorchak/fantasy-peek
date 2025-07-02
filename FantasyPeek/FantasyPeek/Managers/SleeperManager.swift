@@ -26,6 +26,8 @@ final class SleeperManager: SleeperManaging {
 
     private static let baseURL = "https://api.sleeper.app/v1"
 
+    static let avatarBaseURL = "https://sleepercdn.com/avatars"
+
     // NOTE: Only support "nfl" for sport right now
     func fetchAllLeagues(username: String, sport: String, season: String) async throws -> [SleeperLeagueInfoModel]? {
         // Call to get user ID from the passed in username

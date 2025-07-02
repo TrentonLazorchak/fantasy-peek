@@ -15,7 +15,7 @@ struct LeagueInfoViewModel {
     init(sleeperLeagueInfo: SleeperLeagueInfoModel) {
         id = sleeperLeagueInfo.leagueID
         name = sleeperLeagueInfo.name
-        avatar = "https://sleepercdn.com/avatars/thumbs/\(sleeperLeagueInfo.avatar ?? "")"
+        avatar = "\(SleeperManager.avatarBaseURL)/thumbs/\(sleeperLeagueInfo.avatar ?? "")"
     }
 }
 

@@ -7,26 +7,6 @@
 
 import Foundation
 
-struct TeamViewModel {
-    let id: UUID = UUID()
-    let userDisplayName: String
-    let teamName: String?
-    let avatar: String?
-    let starters: [PlayerViewModel]
-    let bench: [PlayerViewModel]
-    let wins: Int
-    let losses: Int
-    let ties: Int
-    let index: Int
-}
-
-struct PlayerViewModel {
-    let playerID: String
-    let name: String?
-    let position: String?
-    let team: String?
-}
-
 @Observable @MainActor
 final class RostersViewModel {
 
@@ -123,7 +103,7 @@ final class RostersViewModel {
             let team = TeamViewModel(
                 userDisplayName: userDisplayName,
                 teamName: ownerUser?.metadata?.teamName,
-                avatar:  "https://sleepercdn.com/avatars/thumbs/\(ownerUser?.avatar ?? "")",
+                avatar:  "\(SleeperManager.avatarBaseURL)/thumbs/\(ownerUser?.avatar ?? "")",
                 starters: starters,
                 bench: bench,
                 wins: wins,
@@ -137,7 +117,5 @@ final class RostersViewModel {
 
         return newTeams
     }
-
-    // TODO: Separate function one will be to generate a team name using foundational models
 
 }

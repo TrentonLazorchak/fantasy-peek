@@ -10,6 +10,7 @@ import SwiftUI
 struct RosterView: View {
 
     let team: TeamViewModel
+    let refreshAction: (Bool) async -> Void
 
     var body: some View {
         VStack {
@@ -35,6 +36,11 @@ struct RosterView: View {
                     }
                 }
             }
+            .refreshable {
+                Task {
+                    await refreshAction(true)
+                }
+            }
         }
     }
 
@@ -54,7 +60,7 @@ struct RosterSkeletonView: View {
             losses: 10,
             ties: 10,
             index: 0
-        ))
+        ), refreshAction: { _ in })
         .scrollDisabled(true)
         .redacted(reason: .placeholder)
     }
@@ -73,7 +79,7 @@ struct RosterSkeletonView: View {
             losses: 2,
             ties: 3,
             index: 0
-        ))
+        ), refreshAction: { _ in })
     }
 }
 

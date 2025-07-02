@@ -41,6 +41,7 @@ final class RostersViewModel {
     var viewState: ViewState = .initial
     enum ViewState {
         case initial
+        case loading
         case loaded
         case empty
         case failure
@@ -61,8 +62,8 @@ final class RostersViewModel {
         return teams[selectedRosterIndex]
     }
 
-    func fetchRosters() async {
-        viewState = .initial
+    func fetchRosters(isRefresh: Bool = false) async {
+        viewState = isRefresh ? .loading : .initial
 
         do {
             // Call to fetch rosters
@@ -71,7 +72,7 @@ final class RostersViewModel {
                 return
             }
 
-            teams = try await Self.getTeams(sleeperManager: sleeperManager, leagueID: leagueID)
+            teams = try await Self.getTeams(sleeperManager: sleeperManager, leagueID: leagueID, useCache: !isRefresh)
             viewState = .loaded
             didFinishLoading = true
         } catch {
@@ -80,10 +81,10 @@ final class RostersViewModel {
         }
     }
 
-    static func getTeams(sleeperManager: SleeperManaging, leagueID: String) async throws -> [TeamViewModel] {
-        let rosters = try await sleeperManager.fetchAllRosters(leagueID: leagueID)
+    static func getTeams(sleeperManager: SleeperManaging, leagueID: String, useCache: Bool) async throws -> [TeamViewModel] {
+        let rosters = try await sleeperManager.fetchAllRosters(leagueID: leagueID, useCache: useCache)
         let nflPlayers = try await sleeperManager.fetchAllNFLPlayers()
-        let users = try await sleeperManager.fetchAllUsers(leagueID: leagueID)
+        let users = try await sleeperManager.fetchAllUsers(leagueID: leagueID, useCache: useCache)
 
         var newTeams: [TeamViewModel] = []
         var index = 0

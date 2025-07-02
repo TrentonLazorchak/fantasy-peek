@@ -10,8 +10,8 @@ import Foundation
 protocol SleeperManaging {
     func fetchAllLeagues(username: String, sport: String, season: String) async throws -> [SleeperLeagueInfoModel]?
     func fetchLeagueInfo(leagueID: String) async throws -> SleeperLeagueInfoModel
-    func fetchAllRosters(leagueID: String) async throws -> [SleeperRosterModel]
-    func fetchAllUsers(leagueID: String) async throws -> [SleeperUserModel]
+    func fetchAllRosters(leagueID: String, useCache: Bool) async throws -> [SleeperRosterModel]
+    func fetchAllUsers(leagueID: String, useCache: Bool) async throws -> [SleeperUserModel]
     func fetchAllNFLPlayers() async throws -> SleeperPlayersResponse
 }
 
@@ -43,12 +43,12 @@ final class SleeperManager: SleeperManaging {
         try await fetch(urlString: "\(Self.baseURL)/league/\(leagueID)", as: SleeperLeagueInfoModel.self)
     }
 
-    func fetchAllRosters(leagueID: String) async throws -> [SleeperRosterModel] {
-        try await fetch(urlString: "\(Self.baseURL)/league/\(leagueID)/rosters", as: [SleeperRosterModel].self)
+    func fetchAllRosters(leagueID: String, useCache: Bool) async throws -> [SleeperRosterModel] {
+        try await fetch(urlString: "\(Self.baseURL)/league/\(leagueID)/rosters", as: [SleeperRosterModel].self, useCache: useCache)
     }
 
-    func fetchAllUsers(leagueID: String) async throws -> [SleeperUserModel] {
-        try await fetch(urlString: "\(Self.baseURL)/league/\(leagueID)/users", as: [SleeperUserModel].self)
+    func fetchAllUsers(leagueID: String, useCache: Bool) async throws -> [SleeperUserModel] {
+        try await fetch(urlString: "\(Self.baseURL)/league/\(leagueID)/users", as: [SleeperUserModel].self, useCache: useCache)
     }
 
     func fetchAllNFLPlayers() async throws -> SleeperPlayersResponse {

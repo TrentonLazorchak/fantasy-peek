@@ -26,12 +26,13 @@ final class LeagueViewModel {
     var viewState: ViewState = .initial
     enum ViewState {
         case initial
+        case loading
         case loaded
         case failure
     }
 
-    func fetchLeagueInfo() async {
-        viewState = .initial
+    func fetchLeagueInfo(isRefresh: Bool = false) async {
+        viewState = isRefresh ? .loading : .initial
 
         do {
             guard let leagueID else {
@@ -43,7 +44,7 @@ final class LeagueViewModel {
             leagueName = leagueInfo.name
             season = leagueInfo.season
 
-            teams = try await RostersViewModel.getTeams(sleeperManager: sleeperManager, leagueID: leagueID)
+            teams = try await RostersViewModel.getTeams(sleeperManager: sleeperManager, leagueID: leagueID, useCache: !isRefresh)
 
             viewState = .loaded
         } catch {

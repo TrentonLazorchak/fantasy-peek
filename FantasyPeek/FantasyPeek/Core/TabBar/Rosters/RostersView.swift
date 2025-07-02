@@ -14,7 +14,7 @@ struct RostersView: View {
     var body: some View {
         ZStack {
             switch viewModel.viewState {
-            case .initial, .loaded:
+            case .initial, .loaded, .loading:
                 VStack {
                     ScrollableTabPicker(
                         selectedIndex: $viewModel.selectedRosterIndex,
@@ -34,6 +34,10 @@ struct RostersView: View {
                         }
                         .tabViewStyle(.page(indexDisplayMode: .never))
                     }
+                }
+
+                if viewModel.viewState == .loading {
+                    LoadingView()
                 }
             case .empty:
                 VStack {

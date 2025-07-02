@@ -67,11 +67,3 @@ struct SleeperLeagueSettings: Codable {
         case tradeReviewDays = "trade_review_days"
     }
 }
-
-struct SleeperUser: Codable {
-    let userID: String
-
-    enum CodingKeys: String, CodingKey {
-        case userID = "user_id"
-    }
-}

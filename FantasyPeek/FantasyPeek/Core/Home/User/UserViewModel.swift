@@ -6,6 +6,7 @@
 //
 
 import Observation
+import Foundation
 
 @Observable @MainActor
 final class UserViewModel {
@@ -17,6 +18,9 @@ final class UserViewModel {
 
     var username: String = ""
     var leagues: [LeagueInfoViewModel]?
+    var selectedYear: String = String(Calendar.current.component(.year, from: Date()))
+
+    static let selectableYears: [String] = Array(2018...2025).reversed().map { String($0) }
 
     var viewState: ViewState = .loaded
     enum ViewState {
@@ -31,8 +35,7 @@ final class UserViewModel {
         viewState = .loading
 
         do {
-            // TODO: Allow user to select year
-            if let sleeperLeagues = try await sleeperManager.fetchAllLeagues(for: username, season: "2024") {
+            if let sleeperLeagues = try await sleeperManager.fetchAllLeagues(username: username, season: selectedYear) {
                 leagues = sleeperLeagues.map { league in
                         .init(sleeperLeagueInfo: league)
                 }
@@ -40,7 +43,6 @@ final class UserViewModel {
                 viewState = .empty
             }
             viewState = leagues?.isEmpty != false ? .empty : .loaded
-            // TODO: Show list of leagues, on selection, show tab bar view
         } catch {
             viewState = .failure
         }

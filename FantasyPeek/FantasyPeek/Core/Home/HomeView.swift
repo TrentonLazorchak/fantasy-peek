@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct HomeView: View {
+
+    @Binding var leagueID: String?
+
     var body: some View {
-        // TODO: Tab bar view will show this as a sheet. Then after select league we'll dismiss and load tab bar view
         NavigationStack {
             VStack {
                 Text("Welcome to FantasyPeek!")
@@ -17,11 +19,11 @@ struct HomeView: View {
                 
                 HStack {
                     NavigationLink("Enter League ID") {
-                        LeagueInputView(viewModel: .init())
+                        LeagueInputView(viewModel: .init(), leagueID: $leagueID)
                     }
                     
                     NavigationLink("Enter Username") {
-                        UserView(viewModel: .init())
+                        UserView(viewModel: .init(), leagueID: $leagueID)
                     }
                 }
             }
@@ -30,5 +32,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(leagueID: .constant(nil))
 }

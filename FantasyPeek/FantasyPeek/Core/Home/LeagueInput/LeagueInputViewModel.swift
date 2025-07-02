@@ -10,12 +10,12 @@ import Observation
 struct LeagueInfoViewModel {
     let id: String
     let name: String
-    let totalRosters: Int
+    let avatar: String?
 
     init(sleeperLeagueInfo: SleeperLeagueInfoModel) {
         id = sleeperLeagueInfo.leagueID
         name = sleeperLeagueInfo.name
-        totalRosters = sleeperLeagueInfo.totalRosters
+        avatar = "https://sleepercdn.com/avatars/thumbs/\(sleeperLeagueInfo.avatar ?? "")"
     }
 }
 
@@ -42,10 +42,9 @@ final class LeagueInputViewModel {
         viewState = .loading
 
         do {
-            let sleeperLeagueInfo = try await sleeperManager.fetchLeagueInfo(leagueID: leagueID)
+            let sleeperLeagueInfo = try await sleeperManager.fetchLeagueInfo(leagueID: leagueID, useCache: false)
             leagueInfo = .init(sleeperLeagueInfo: sleeperLeagueInfo)
             viewState = .loaded
-            // TODO: Navigate to tab bar of pages as listed in notes
         } catch {
             viewState = .failure
         }

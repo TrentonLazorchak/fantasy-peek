@@ -13,21 +13,15 @@ import FoundationModels
 // Models may not be available if the device is in low battery mode or it becomes too warm.
 // https://developer.apple.com/documentation/foundationmodels/generating-content-and-performing-tasks-with-foundation-models
 protocol FoundationModelsManaging {
-    func sendPrompt(prompt: String) async throws -> String
+    func sendPrompt(prompt: String, instructions: String) async throws -> String
 }
 
 final class FoundationModelsManager: FoundationModelsManaging {
     /// Reference to the system language model.
     private var model = SystemLanguageModel.default
 
-    let session: LanguageModelSession
-
-    init(instructions: String) {
-        // Create session with passed in instructions
-        self.session = LanguageModelSession(instructions: instructions)
-    }
-
-    func sendPrompt(prompt: String) async throws -> String {
+    func sendPrompt(prompt: String, instructions: String) async throws -> String {
+        let session = LanguageModelSession(instructions: instructions)
         switch model.availability {
         case .available:
             // Max temperature for more creative responses

@@ -42,15 +42,16 @@ struct LeagueView: View {
 
                     // Buttons for AI
                     VStack(spacing: 8) {
-                        // TODO: For FoundationalModelsManager, going to pass in the rosters information
                         Button("Generate League Name") {
-
+                            Task {
+                                await viewModel.generateLeagueName()
+                            }
                         }
-                        Button("Rank Teams") {
-
-                        }
-                        Button("Roast League") {
-                        }
+//                        Button("Rank Teams") {
+//
+//                        }
+//                        Button("Roast League") {
+//                        }
 
                         // TODO: Rate draft
                         // TODO: Need to have extra calls in order to get draft information. Probably new tab

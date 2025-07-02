@@ -15,35 +15,27 @@ final class RosterViewModel {
 
     init(team: TeamViewModel,
          refreshAction: @escaping (Bool) async -> Void,
-         foundationModelsManager: FoundationModelsManaging? = nil) {
+         foundationModelsManager: FoundationModelsManaging = FoundationModelsManager()) {
         self.team = team
         self.refreshAction = refreshAction
-
-        let instructions = "You are an AI tool in a fantasy football app. Here is data about the current team: \(team.summary)"
-        self.foundationModelsManager = foundationModelsManager ?? FoundationModelsManager(instructions: instructions)
+        self.foundationModelsManager = foundationModelsManager
     }
 
     var generatedTeamName: String?
     var aiError: String?
     var showAIErrorAlert: Bool = false
-
     var isAILoading: Bool = false
 
     func generateTeamName() async {
         isAILoading = true
         do {
-            let prompt = "Generate a team name for this team. Only return the name of the team."
-            generatedTeamName = try await foundationModelsManager.sendPrompt(prompt: prompt)
-        } catch FoundationModelsError.deviceNotEligible {
-            print("Device not eligible for AI")
-        } catch FoundationModelsError.appleIntelligenceNotEnabled {
-            print("Not enabled")
-        } catch FoundationModelsError.modelNotReady {
-            print("Not ready")
-        } catch FoundationModelsError.unknown {
-            print("Unknown") // device eligibility error
+            let prompt = "Generate a new team name for this team. Only return the generated name of the team."
+            let instructions = "You are an AI tool in a fantasy football app. Here is data about the current team: \(team.summary)"
+            generatedTeamName = try await foundationModelsManager.sendPrompt(prompt: prompt, instructions: instructions)
+        } catch let error as FoundationModelsError {
+            print(error.localizedDescription)
         } catch {
-            print("Other") // sending prompt error
+            print(error.localizedDescription)
         }
     }
 }

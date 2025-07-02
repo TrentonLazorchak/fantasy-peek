@@ -15,4 +15,17 @@ enum FoundationModelsError: Error {
     case modelNotReady
     // The model is unavailable for an unknown reason.
     case unknown
+
+    var localizedDescription: String {
+        switch self {
+        case .deviceNotEligible:
+            return "This device is not eligible for Apple Intelligence."
+        case .appleIntelligenceNotEnabled:
+            return "Apple Intelligence is not enabled on this device."
+        case .modelNotReady:
+            return "The model is not ready."
+        case .unknown:
+            return "The model is unavailable for an unknown reason."
+        }
+    }
 }

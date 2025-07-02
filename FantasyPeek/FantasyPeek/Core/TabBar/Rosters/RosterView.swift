@@ -13,6 +13,7 @@ struct RosterView: View {
 
     var body: some View {
         VStack {
+            // AI Generate Team Name
             if let generatedTeamName = viewModel.generatedTeamName {
                 Text("Generated Name: \(generatedTeamName)")
             }
@@ -21,9 +22,6 @@ struct RosterView: View {
                     await viewModel.generateTeamName()
                 }
             }
-
-
-            // TODO: Generated team name here
 
             // TODO: Rate my team with a sheet that pops up
             // TODO: AI Rate My Team

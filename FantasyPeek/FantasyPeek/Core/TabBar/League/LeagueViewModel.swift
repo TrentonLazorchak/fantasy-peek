@@ -11,10 +11,14 @@ import Foundation
 final class LeagueViewModel {
 
     let sleeperManager: SleeperManaging
+    let foundationModelsManager: FoundationModelsManaging
     let leagueID: String?
 
-    init(manager: SleeperManaging = SleeperManager(), leagueID: String?) {
+    init(manager: SleeperManaging = SleeperManager(),
+         foundationModelsManager: FoundationModelsManaging = FoundationModelsManager(),
+         leagueID: String?) {
         self.sleeperManager = manager
+        self.foundationModelsManager = foundationModelsManager
         self.leagueID = leagueID
     }
 
@@ -22,6 +26,12 @@ final class LeagueViewModel {
     var leagueName: String = ""
     var season: String?
     var teams: [TeamViewModel] = []
+
+    // AI
+    var generatedLeagueName: String?
+    var aiError: String?
+    var showAIErrorAlert: Bool = false
+    var isAILoading: Bool = false
 
     var viewState: ViewState = .initial
     enum ViewState {
@@ -51,6 +61,33 @@ final class LeagueViewModel {
             print("Error: \(error.localizedDescription)")
             viewState = .failure
         }
+    }
+
+    func generateLeagueName() async {
+        isAILoading = true
+        do {
+            let prompt = "Generate a new team name for this league. Only return the generated name of the league."
+            let instructions = "You are an AI tool in a fantasy football app. Here is data about the entire league: \(leagueSummary)"
+            generatedLeagueName = try await foundationModelsManager.sendPrompt(prompt: prompt, instructions: instructions)
+        } catch let error as FoundationModelsError {
+            print(error.localizedDescription)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    private var leagueSummary: String {
+        var lines: [String] = []
+
+        lines.append("League Name: \(leagueName)")
+        lines.append("Season: \(season ?? "Unknown")")
+        lines.append("Sport: NFL") // TODO: When adding more sports, allow to change this
+
+        for (index, team) in teams.enumerated() {
+            lines.append("Team #\(index): \(team.summary)")
+        }
+
+        return lines.joined(separator: "\n")
     }
 
 }

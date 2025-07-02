@@ -39,7 +39,7 @@ final class LeagueViewModel {
                 viewState = .failure
                 return
             }
-            let leagueInfo = try await sleeperManager.fetchLeagueInfo(leagueID: leagueID)
+            let leagueInfo = try await sleeperManager.fetchLeagueInfo(leagueID: leagueID, useCache: !isRefresh)
             leagueAvatarURLString = leagueInfo.avatar
             leagueName = leagueInfo.name
             season = leagueInfo.season

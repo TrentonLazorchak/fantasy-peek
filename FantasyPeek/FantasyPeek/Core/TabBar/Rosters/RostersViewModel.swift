@@ -93,8 +93,7 @@ final class RostersViewModel {
 
             // Fetch username from owner id
             var userDisplayName = "Username"
-            if let ownerID = roster.ownerID,
-               let ownerUser {
+            if let ownerUser {
                 userDisplayName = ownerUser.displayName
             }
 

@@ -42,7 +42,7 @@ final class LeagueInputViewModel {
         viewState = .loading
 
         do {
-            let sleeperLeagueInfo = try await sleeperManager.fetchLeagueInfo(leagueID: leagueID)
+            let sleeperLeagueInfo = try await sleeperManager.fetchLeagueInfo(leagueID: leagueID, useCache: false)
             leagueInfo = .init(sleeperLeagueInfo: sleeperLeagueInfo)
             viewState = .loaded
         } catch {

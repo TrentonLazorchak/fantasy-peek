@@ -21,14 +21,7 @@ struct LeagueView: View {
                         image
                             .resizable()
                     } placeholder: {
-                        ZStack {
-                            Circle()
-                                .foregroundStyle(.black)
-                            Image(systemName: "american.football.fill")
-                                .foregroundStyle(.white)
-                                .font(.title)
-                        }
-
+                        PlaceholderView()
                     }
                     .frame(width: 100, height: 100)
 
@@ -80,13 +73,7 @@ struct LeagueView: View {
                                     image
                                         .resizable()
                                 } placeholder: {
-                                    ZStack {
-                                        Rectangle()
-                                            .foregroundStyle(.black)
-                                        Image(systemName: "american.football.fill")
-                                            .foregroundStyle(.white)
-                                    }
-
+                                    PlaceholderView()
                                 }
                                 .frame(width: 25, height: 25)
 

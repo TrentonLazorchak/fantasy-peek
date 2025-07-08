@@ -26,7 +26,7 @@ struct ScrollableTabPicker: View {
                                 .redacted(reason: .placeholder)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10)
-                                        .stroke(.black, lineWidth: 1)
+                                        .stroke(.primary, lineWidth: 1)
                                 )
                         }
                     } else {
@@ -35,14 +35,14 @@ struct ScrollableTabPicker: View {
                                 .id(index)
                                 .padding(.vertical, 8)
                                 .padding(.horizontal, 16)
-                                .background(selectedIndex == index ? Color.blue.opacity(0.2) : Color.clear)
+                                .background(selectedIndex == index ? Color.blue.opacity(0.4) : Color.clear)
                                 .cornerRadius(8)
                                 .onTapGesture {
                                     selectedIndex = index
                                 }
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10)
-                                        .stroke(.black, lineWidth: 1)
+                                        .stroke(.primary, lineWidth: 1)
                                 )
                         }
                     }
@@ -84,5 +84,5 @@ struct ScrollableTabPicker: View {
 }
 
 #Preview {
-    ScrollableTabPicker(selectedIndex: .constant(0), didFinishLoading: .constant(false), items: ["Test", "Trenton", "Testerino", "Meeseeks"])
+    ScrollableTabPicker(selectedIndex: .constant(0), didFinishLoading: .constant(true), items: ["Test", "Trenton", "Testerino", "Meeseeks"])
 }

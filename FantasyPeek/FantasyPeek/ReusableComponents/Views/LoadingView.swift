@@ -11,7 +11,7 @@ struct LoadingView: View {
     var body: some View {
         Rectangle()
             .ignoresSafeArea()
-            .foregroundStyle(.black.opacity(0.3))
+            .foregroundStyle(.primary.opacity(0.3))
         ProgressView()
     }
 }

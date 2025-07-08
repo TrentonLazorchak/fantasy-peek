@@ -11,6 +11,11 @@ struct IndividualLeagueView: View {
 
     let leagueName: String
     let leagueAvatar: String?
+    
+    @Environment(\.colorScheme) var colorScheme
+    var dynamicColor: Color {
+        colorScheme == .dark ? .white : .black
+    }
 
     var body: some View {
         HStack {
@@ -18,19 +23,13 @@ struct IndividualLeagueView: View {
                 image
                     .resizable()
             } placeholder: {
-                ZStack {
-                    Circle()
-                        .foregroundStyle(.black)
-                    Image(systemName: "american.football.fill")
-                        .foregroundStyle(.white)
-                }
-
+                PlaceholderView()
             }
             .frame(width: 50, height: 50)
 
             Text("\(leagueName)")
                 .font(.headline)
-                .foregroundStyle(.black)
+                .foregroundStyle(dynamicColor)
         }
     }
 }

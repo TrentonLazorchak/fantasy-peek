@@ -1,5 +1,5 @@
 //
-//  HomeViewModel.swift
+//  LeagueInputViewModel.swift
 //  FantasyPeek
 //
 //  Created by Trenton Lazorchak on 6/9/25.

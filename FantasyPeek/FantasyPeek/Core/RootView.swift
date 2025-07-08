@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RootView: View {
 
-    @State var showHomeView: Bool = false
+    @State var showWelcomeView: Bool = false
     @AppStorage("leagueID") var leagueID: String?
 
     var body: some View {
@@ -20,15 +20,15 @@ struct RootView: View {
             }
         }
         .onAppear {
-            showHomeView = leagueID == nil
+            showWelcomeView = leagueID == nil
         }
         .onChange(of: leagueID) {
-            showHomeView = leagueID == nil
+            showWelcomeView = leagueID == nil
         }
-        .fullScreenCover(isPresented: $showHomeView, content: {
+        .fullScreenCover(isPresented: $showWelcomeView, content: {
             // If the state variable is true (league is not selected), show the home view
             NavigationStack {
-                HomeView(leagueID: $leagueID)
+                WelcomeView(leagueID: $leagueID)
             }
         })
     }

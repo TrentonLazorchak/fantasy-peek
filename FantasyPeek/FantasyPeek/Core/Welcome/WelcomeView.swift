@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  WelcomeView.swift
 //  FantasyPeek
 //
 //  Created by Trenton Lazorchak on 6/13/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct WelcomeView: View {
 
     @Binding var leagueID: String?
 
@@ -32,5 +32,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(leagueID: .constant(nil))
+    WelcomeView(leagueID: .constant(nil))
 }

@@ -14,6 +14,7 @@ struct UserView: View {
 
     var body: some View {
         ZStack {
+            // TODO: Make it so keyboard doesn't shrink screen and also can dismiss keyboard on tap outside
             VStack {
                 Text("Find Your Leagues")
                     .font(.system(size: 40, weight: .black))

@@ -47,7 +47,7 @@ final class RosterViewModel {
             isAILoading = false
         } catch {
             print(error.localizedDescription)
-            aiError = error.localizedDescription
+            aiError = nil
             showAIErrorAlert = true
             isAILoading = false
         }

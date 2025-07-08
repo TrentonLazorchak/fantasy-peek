@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  LeagueInputView.swift
 //  FantasyPeek
 //
 //  Created by Trenton Lazorchak on 6/9/25.
@@ -16,7 +16,8 @@ struct LeagueInputView: View {
         ZStack {
             VStack(spacing: 20) {
                 Text("Find Your League Info")
-                    .font(.title)
+                    .font(.system(size: 40, weight: .black))
+                    .multilineTextAlignment(.center)
 
                 TextField("Enter Sleeper League ID", text: $viewModel.leagueID)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -27,6 +28,8 @@ struct LeagueInputView: View {
                         await viewModel.fetchSleeperLeagueInfo()
                     }
                 }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
 
                 if let leagueInfo = viewModel.leagueInfo {
                     Button {

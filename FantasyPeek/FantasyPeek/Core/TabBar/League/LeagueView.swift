@@ -21,14 +21,7 @@ struct LeagueView: View {
                         image
                             .resizable()
                     } placeholder: {
-                        ZStack {
-                            Circle()
-                                .foregroundStyle(.black)
-                            Image(systemName: "american.football.fill")
-                                .foregroundStyle(.white)
-                                .font(.title)
-                        }
-
+                        PlaceholderView()
                     }
                     .frame(width: 100, height: 100)
 
@@ -42,15 +35,30 @@ struct LeagueView: View {
 
                     // Buttons for AI
                     VStack(spacing: 8) {
-                        // TODO: For FoundationalModelsManager, going to pass in the rosters information
+                        if let generatedLeagueName = viewModel.generatedLeagueName {
+                            HStack(spacing: 8) {
+                                Text("\(generatedLeagueName)")
+                                Button(action: {
+                                    UIPasteboard.general.string = generatedLeagueName
+                                }) {
+                                    Image(systemName: "doc.on.doc")
+                                }
+                                .accessibilityLabel("Copy generated name")
+                            }
+                        } else if viewModel.isAILoading {
+                            Text("Loading...")
+                        }
+
                         Button("Generate League Name") {
+                            Task {
+                                await viewModel.generateLeagueName()
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.regular)
 
-                        }
-                        Button("Rank Teams") {
-
-                        }
-                        Button("Roast League") {
-                        }
+                        // TODO: Rank Teams
+                        // TODO: Roast League
 
                         // TODO: Rate draft
                         // TODO: Need to have extra calls in order to get draft information. Probably new tab
@@ -65,13 +73,7 @@ struct LeagueView: View {
                                     image
                                         .resizable()
                                 } placeholder: {
-                                    ZStack {
-                                        Rectangle()
-                                            .foregroundStyle(.black)
-                                        Image(systemName: "american.football.fill")
-                                            .foregroundStyle(.white)
-                                    }
-
+                                    PlaceholderView()
                                 }
                                 .frame(width: 25, height: 25)
 
@@ -113,6 +115,11 @@ struct LeagueView: View {
             Task {
                 await viewModel.fetchLeagueInfo()
             }
+        }
+        .alert(isPresented: $viewModel.showAIErrorAlert) {
+            Alert(title: Text("Error"),
+                  message: Text(viewModel.aiError ?? "An unknown error occurred."),
+                  dismissButton: .default(Text("OK")))
         }
     }
 

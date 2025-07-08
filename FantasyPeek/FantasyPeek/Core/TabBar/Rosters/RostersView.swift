@@ -28,7 +28,7 @@ struct RostersView: View {
                     } else {
                         TabView(selection: $viewModel.selectedRosterIndex) {
                             ForEach(viewModel.teams, id: \.id) { team in
-                                RosterView(team: team, refreshAction: viewModel.fetchRosters)
+                                RosterView(viewModel: .init(team: team, refreshAction: viewModel.fetchRosters))
                                     .tag(team.index)
                             }
                         }

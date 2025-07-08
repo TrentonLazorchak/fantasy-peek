@@ -1,5 +1,5 @@
 //
-//  HomeViewModel.swift
+//  LeagueInputViewModel.swift
 //  FantasyPeek
 //
 //  Created by Trenton Lazorchak on 6/9/25.
@@ -15,7 +15,7 @@ struct LeagueInfoViewModel {
     init(sleeperLeagueInfo: SleeperLeagueInfoModel) {
         id = sleeperLeagueInfo.leagueID
         name = sleeperLeagueInfo.name
-        avatar = "https://sleepercdn.com/avatars/thumbs/\(sleeperLeagueInfo.avatar ?? "")"
+        avatar = "\(SleeperManager.avatarBaseURL)/thumbs/\(sleeperLeagueInfo.avatar ?? "")"
     }
 }
 

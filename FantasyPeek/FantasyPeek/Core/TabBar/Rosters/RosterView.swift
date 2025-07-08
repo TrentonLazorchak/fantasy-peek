@@ -9,38 +9,58 @@ import SwiftUI
 
 struct RosterView: View {
 
-    let team: TeamViewModel
-    let refreshAction: (Bool) async -> Void
+    @State var viewModel: RosterViewModel
 
     var body: some View {
         VStack {
-            Button("AI Generate a Team Name") {
-                // TODO: Foundational Models call to create team name
+            // AI Generate Team Name
+            if let generatedTeamName = viewModel.generatedTeamName {
+                HStack(spacing: 8) {
+                    Text("\(generatedTeamName)")
+                    Button(action: {
+                        UIPasteboard.general.string = generatedTeamName
+                    }) {
+                        Image(systemName: "doc.on.doc")
+                    }
+                    .accessibilityLabel("Copy generated name")
+                }
+            } else if viewModel.isAILoading {
+                Text("Loading...")
             }
-
-            // TODO: Generated team name here
+            Button("AI Generate a Team Name") {
+                Task {
+                    await viewModel.generateTeamName()
+                }
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.regular)
 
             // TODO: Rate my team with a sheet that pops up
             // TODO: AI Rate My Team
 
             List {
                 Section("Starters") {
-                    ForEach(team.starters, id: \.name) { player in
+                    ForEach(viewModel.team.starters, id: \.name) { player in
                         PlayerView(position: .init(from: player.position), name: player.name, team: .init(from: player.team))
                     }
                 }
 
                 Section("Bench") {
-                    ForEach(team.bench, id: \.name) { player in
+                    ForEach(viewModel.team.bench, id: \.name) { player in
                         PlayerView(position: .init(from: player.position), name: player.name, team: .init(from: player.team))
                     }
                 }
             }
             .refreshable {
                 Task {
-                    await refreshAction(true)
+                    await viewModel.refreshAction(true)
                 }
             }
+        }
+        .alert(isPresented: $viewModel.showAIErrorAlert) {
+            Alert(title: Text("Error"),
+                  message: Text(viewModel.aiError ?? "An unknown error occurred."),
+                  dismissButton: .default(Text("OK")))
         }
     }
 
@@ -50,7 +70,7 @@ struct RosterSkeletonView: View {
     private static let mockPlayer: PlayerViewModel = .init(playerID: "123", name: nil, position: nil, team: nil)
 
     var body: some View {
-        RosterView(team: .init(
+        RosterView(viewModel: .init(team: .init(
             userDisplayName: "TrentonLaz",
             teamName: nil,
             avatar: nil,
@@ -60,7 +80,7 @@ struct RosterSkeletonView: View {
             losses: 10,
             ties: 10,
             index: 0
-        ), refreshAction: { _ in })
+        ), refreshAction: { _ in }))
         .scrollDisabled(true)
         .redacted(reason: .placeholder)
     }
@@ -69,7 +89,7 @@ struct RosterSkeletonView: View {
 #Preview {
     let player: PlayerViewModel = .init(playerID: "1234", name: "Trenton Lazorchak", position: "QB", team: "WAS")
     NavigationView {
-        RosterView(team: .init(
+        RosterView(viewModel: .init(team: .init(
             userDisplayName: "TrentonLaz",
             teamName: nil,
             avatar: nil,
@@ -79,7 +99,7 @@ struct RosterSkeletonView: View {
             losses: 2,
             ties: 3,
             index: 0
-        ), refreshAction: { _ in })
+        ), refreshAction: { _ in }))
     }
 }
 
@@ -88,3 +108,4 @@ struct RosterSkeletonView: View {
         RosterSkeletonView()
     }
 }
+

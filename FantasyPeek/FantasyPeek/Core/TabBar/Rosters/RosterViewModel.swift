@@ -28,9 +28,16 @@ final class RosterViewModel {
 
     func generateTeamName() async {
         isAILoading = true
+        generatedTeamName = nil
         do {
-            let prompt = "Generate a new team name for this team. Only return the generated name of the team."
-            let instructions = "You are an AI tool in a fantasy football app. Here is data about the current team: \(team.summary)"
+            let prompt = "Generate a creative fantasy football team name. Only return the name. Maximum three words."
+            let instructions = """
+            You are an assistant in a fantasy football app. Based on the following team data, suggest a creative and relevant team name. The name should be no more than three words long. Only output the team name — no explanations or extra text.
+
+            Here is the team:
+
+            \(team.summary)
+            """
             generatedTeamName = try await foundationModelsManager.sendPrompt(prompt: prompt, instructions: instructions)
             isAILoading = false
         } catch let error as FoundationModelsError {

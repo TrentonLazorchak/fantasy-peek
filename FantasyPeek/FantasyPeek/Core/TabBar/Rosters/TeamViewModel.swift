@@ -32,11 +32,20 @@ struct TeamViewModel {
                 lines.append("• \(player.summary)")
             }
         }
+        
+        if !starters.isEmpty {
+            lines.append("Starters:")
+            for player in starters {
+                lines.append("• \(player.summary)")
+            }
+        }
 
         if !bench.isEmpty {
             lines.append("Bench:")
             for player in bench {
-                lines.append("• \(player.summary)")
+                if !player.summary.contains("Downs") {
+                    lines.append("• \(player.summary)")
+                }
             }
         }
 

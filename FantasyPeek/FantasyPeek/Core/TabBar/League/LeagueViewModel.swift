@@ -65,9 +65,16 @@ final class LeagueViewModel {
 
     func generateLeagueName() async {
         isAILoading = true
+        generatedLeagueName = nil
         do {
-            let prompt = "Generate a new team name for this league. Only return the generated name of the league."
-            let instructions = "You are an AI tool in a fantasy football app. Here is data about the entire league: \(leagueSummary)"
+            let prompt = "Generate a creative fantasy football league name. Only return the name. Maximum three words."
+            let instructions = """
+            You are an assistant in a fantasy football app. Based on the following league data, suggest a creative and relevant league name. The name should be no more than three words long. Only output the league name — no explanations or extra text.
+
+            Here is the league:
+
+            \(leagueSummary)
+            """
             generatedLeagueName = try await foundationModelsManager.sendPrompt(prompt: prompt, instructions: instructions)
             isAILoading = false
         } catch let error as FoundationModelsError {

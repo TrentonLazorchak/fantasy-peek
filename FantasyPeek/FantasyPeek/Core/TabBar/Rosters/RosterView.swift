@@ -15,7 +15,15 @@ struct RosterView: View {
         VStack {
             // AI Generate Team Name
             if let generatedTeamName = viewModel.generatedTeamName {
-                Text("Generated Name: \(generatedTeamName)")
+                HStack(spacing: 8) {
+                    Text("\(generatedTeamName)")
+                    Button(action: {
+                        UIPasteboard.general.string = generatedTeamName
+                    }) {
+                        Image(systemName: "doc.on.doc")
+                    }
+                    .accessibilityLabel("Copy generated name")
+                }
             } else if viewModel.isAILoading {
                 Text("Loading...")
             }
@@ -24,6 +32,8 @@ struct RosterView: View {
                     await viewModel.generateTeamName()
                 }
             }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.regular)
 
             // TODO: Rate my team with a sheet that pops up
             // TODO: AI Rate My Team
@@ -98,3 +108,4 @@ struct RosterSkeletonView: View {
         RosterSkeletonView()
     }
 }
+

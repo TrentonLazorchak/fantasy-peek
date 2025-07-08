@@ -43,7 +43,15 @@ struct LeagueView: View {
                     // Buttons for AI
                     VStack(spacing: 8) {
                         if let generatedLeagueName = viewModel.generatedLeagueName {
-                            Text("Generated League Name: \(generatedLeagueName)")
+                            HStack(spacing: 8) {
+                                Text("\(generatedLeagueName)")
+                                Button(action: {
+                                    UIPasteboard.general.string = generatedLeagueName
+                                }) {
+                                    Image(systemName: "doc.on.doc")
+                                }
+                                .accessibilityLabel("Copy generated name")
+                            }
                         } else if viewModel.isAILoading {
                             Text("Loading...")
                         }
@@ -53,11 +61,11 @@ struct LeagueView: View {
                                 await viewModel.generateLeagueName()
                             }
                         }
-//                        Button("Rank Teams") {
-//
-//                        }
-//                        Button("Roast League") {
-//                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.regular)
+
+                        // TODO: Rank Teams
+                        // TODO: Roast League
 
                         // TODO: Rate draft
                         // TODO: Need to have extra calls in order to get draft information. Probably new tab

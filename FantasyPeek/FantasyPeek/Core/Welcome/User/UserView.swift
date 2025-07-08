@@ -14,16 +14,18 @@ struct UserView: View {
 
     var body: some View {
         ZStack {
-            VStack(spacing: 20) {
+            VStack {
                 Text("Find Your Leagues")
-                    .font(.title)
+                    .font(.system(size: 40, weight: .black))
+                    .multilineTextAlignment(.center)
 
                 TextField("Enter Sleeper Username", text: $viewModel.username)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
 
-                Text("Selected Year: \(viewModel.selectedYear)")
+                Text("Select a year")
                     .font(.headline)
+                    .padding(.top, 20)
 
                 Picker("Select Year", selection: $viewModel.selectedYear) {
                     ForEach(UserViewModel.selectableYears, id: \.self) { year in
@@ -31,13 +33,16 @@ struct UserView: View {
                     }
                 }
                 .pickerStyle(.wheel) // .menu or .segmented also available
-                .frame(maxHeight: 150)
+                .frame(maxHeight: 100)
 
                 Button("Load Sleeper Leagues") {
                     Task {
                         await viewModel.fetchSleeperLeaguesWithUID()
                     }
                 }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                .padding(.vertical, 12)
 
                 if let leagues = viewModel.leagues,
                    viewModel.viewState == .loaded {

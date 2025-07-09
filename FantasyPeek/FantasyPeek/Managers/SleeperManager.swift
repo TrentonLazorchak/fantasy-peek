@@ -34,7 +34,7 @@ protocol SleeperManaging {
     ///   - useCache: Whether or not to use the cache
     /// - Returns: The users as an array
     func fetchAllUsers(leagueID: String, useCache: Bool) async throws -> [SleeperUserModel]
-    /// Fetches all NFL players (no cache option)
+    /// Fetches all NFL players (must cache every 24 hours)
     /// - Returns: The response including all players
     func fetchAllNFLPlayers() async throws -> SleeperPlayersResponse
 }

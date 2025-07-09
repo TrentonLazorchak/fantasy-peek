@@ -38,7 +38,7 @@ struct UserView: View {
 
                 Button("Load Sleeper Leagues") {
                     Task {
-                        await viewModel.fetchSleeperLeaguesWithUID()
+                        await viewModel.loadSleeperLeaguesWithUID()
                     }
                 }
                 .buttonStyle(.borderedProminent)

@@ -30,7 +30,7 @@ final class UserViewModel {
         case failure
     }
 
-    func fetchSleeperLeaguesWithUID() async {
+    func loadSleeperLeaguesWithUID() async {
         leagues = nil
         viewState = .loading
 

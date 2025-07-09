@@ -1,5 +1,5 @@
 //
-//  UserView.swift
+//  UserInputView.swift
 //  FantasyPeek
 //
 //  Created by Trenton Lazorchak on 6/11/25.
@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct UserView: View {
+/// A view that allows the person to input their username or user id, and season year, and retrieve leagues
+struct UserInputView: View {
 
-    @State var viewModel: UserViewModel
+    @State var viewModel: UserInputViewModel
     @Binding var leagueID: String?
 
     var body: some View {
@@ -28,7 +29,7 @@ struct UserView: View {
                     .padding(.top, 20)
 
                 Picker("Select Year", selection: $viewModel.selectedYear) {
-                    ForEach(UserViewModel.selectableYears, id: \.self) { year in
+                    ForEach(UserInputViewModel.selectableYears, id: \.self) { year in
                         Text(year).tag(year)
                     }
                 }
@@ -80,10 +81,10 @@ struct UserView: View {
 
 #Preview("Success") {
     @Previewable @State var leagueID: String? = "Test"
-    UserView(viewModel: .init(manager: MockSleeperManager.sampleSuccess), leagueID: $leagueID)
+    UserInputView(viewModel: .init(manager: MockSleeperManager.sampleSuccess), leagueID: $leagueID)
 }
 
 #Preview("Failure") {
     @Previewable @State var leagueID: String?
-    UserView(viewModel: .init(manager: MockSleeperManager.sampleFailure), leagueID: $leagueID)
+    UserInputView(viewModel: .init(manager: MockSleeperManager.sampleFailure), leagueID: $leagueID)
 }

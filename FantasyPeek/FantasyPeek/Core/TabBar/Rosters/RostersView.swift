@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// View that is ued to display the rosters in a league
 struct RostersView: View {
 
     @State var viewModel: RostersViewModel
@@ -16,6 +17,7 @@ struct RostersView: View {
             switch viewModel.viewState {
             case .initial, .loaded, .loading:
                 VStack {
+                    // Username picker
                     ScrollableTabPicker(
                         selectedIndex: $viewModel.selectedRosterIndex,
                         didFinishLoading: $viewModel.didFinishLoading,

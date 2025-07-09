@@ -5,6 +5,7 @@
 //  Created by Trenton Lazorchak on 6/9/25.
 //
 
+/// A model for league information retrieved from Sleeper
 struct SleeperLeagueInfoModel: Codable {
     let leagueID: String
     let name: String
@@ -44,6 +45,7 @@ struct SleeperLeagueInfoModel: Codable {
     }
 }
 
+/// A model for league settings information retrieved from Sleeper
 struct SleeperLeagueSettings: Codable {
     let lastScoredLeg: Int?
     let reserveAllowCov: Int?

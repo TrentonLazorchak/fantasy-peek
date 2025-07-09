@@ -13,12 +13,15 @@ struct CachedResponse: Codable {
     let timestamp: Date
 }
 
+/// A manager file for caching, or retrieving cached, data
 enum CacheManager {
     private static let cacheExpirationInterval: TimeInterval = 60 * 60 * 24 // 1 day
     private static let userDefaults = UserDefaults.standard
     private static let storageKeyPrefix = "cache_"
 
     /// Retrieve cached data if exists and not expired
+    /// - Parameter key: The key used by UserDefaults to retrieve the data from
+    /// - Returns: The data from defaults, nil if none or expired
     static func getCachedData(forKey key: String) async throws -> Data? {
         let storageKey = storageKeyPrefix + key
         guard let cachedData = userDefaults.data(forKey: storageKey) else {
@@ -36,6 +39,9 @@ enum CacheManager {
     }
 
     /// Store data in the cache (encodes the value, wraps with timestamp, stores in UserDefaults)
+    /// - Parameters:
+    ///   - data: The encodable data to store in cache
+    ///   - key: The key to store the data under in user defaults
     static func cacheData<T: Encodable>(_ data: T, forKey key: String) async throws {
         let encodedValue = try JSONEncoder().encode(data)
         let wrapped = CachedResponse(data: encodedValue, timestamp: Date())

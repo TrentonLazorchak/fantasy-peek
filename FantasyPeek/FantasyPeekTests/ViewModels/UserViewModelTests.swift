@@ -15,7 +15,7 @@ struct UserViewModelTests {
 
     @Test("Load Sleeper Leagues - success scenario")
     func loadSleeperLeaguesSuccess() async {
-        let viewModel = UserViewModel(manager: MockSleeperManager.sampleSuccess)
+        let viewModel = UserInputViewModel(manager: MockSleeperManager.sampleSuccess)
 
         #expect(viewModel.viewState == .loaded)
 
@@ -31,7 +31,7 @@ struct UserViewModelTests {
 
     @Test("Load Sleeper Leagues - failure scenario")
     func loadSleeperLeaguesFailure() async {
-        let viewModel = UserViewModel(manager: MockSleeperManager.sampleFailure)
+        let viewModel = UserInputViewModel(manager: MockSleeperManager.sampleFailure)
 
         #expect(viewModel.viewState == .loaded)
 

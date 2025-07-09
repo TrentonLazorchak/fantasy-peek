@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A player's football position
 enum Position: String, ExpressibleByStringLiteral {
     case quarterBack = "QB"
     case runningBack = "RB"
@@ -38,6 +39,7 @@ enum Position: String, ExpressibleByStringLiteral {
 }
 
 // swiftlint:disable identifier_name
+/// A players NFL team they play for
 enum NFLTeam: String, ExpressibleByStringLiteral {
     case sf = "SF"
     case kc = "KC"
@@ -159,6 +161,7 @@ enum NFLTeam: String, ExpressibleByStringLiteral {
     }
 }
 
+/// A view used to display an individual player item
 struct PlayerView: View {
 
     let position: Position

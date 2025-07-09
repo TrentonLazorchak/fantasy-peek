@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view used to allow the user to input a league id, and select it
 struct LeagueInputView: View {
 
     @State var viewModel: LeagueInputViewModel

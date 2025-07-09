@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// View model for the league view
 @Observable @MainActor
 final class LeagueViewModel {
 
@@ -41,6 +42,8 @@ final class LeagueViewModel {
         case failure
     }
 
+    /// Loads league info from the sleeper manager
+    /// - Parameter isRefresh: Whether or not this call is a refresh
     func loadLeagueInfo(isRefresh: Bool = false) async {
         viewState = isRefresh ? .loading : .initial
 
@@ -63,6 +66,7 @@ final class LeagueViewModel {
         }
     }
 
+    /// Requests FoundationModels for a league name based on the league information
     func generateLeagueName() async {
         isAILoading = true
         generatedLeagueName = nil

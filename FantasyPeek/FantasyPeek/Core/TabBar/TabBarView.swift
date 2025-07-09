@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A tab view that holds the views for a user with a selected league id
 struct TabBarView: View {
 
     @Binding var leagueID: String?

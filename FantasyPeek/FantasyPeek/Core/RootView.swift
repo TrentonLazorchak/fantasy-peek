@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The root view and holds showing welcome view or displaying tab bar view
 struct RootView: View {
 
     @State var showWelcomeView: Bool = false

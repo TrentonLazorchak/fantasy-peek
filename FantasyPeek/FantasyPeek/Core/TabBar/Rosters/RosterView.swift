@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view for an individual roster
 struct RosterView: View {
 
     @State var viewModel: RosterViewModel
@@ -65,6 +66,7 @@ struct RosterView: View {
 
 }
 
+/// An initial view for a roster view to be displayed before the first load
 struct RosterSkeletonView: View {
     private static let mockPlayer: PlayerViewModel = .init(playerID: "123", name: nil, position: nil, team: nil)
 

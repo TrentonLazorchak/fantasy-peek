@@ -7,6 +7,7 @@
 
 import Observation
 
+/// A view model used by the roster view
 @Observable @MainActor
 final class RosterViewModel {
     let foundationModelsManager: FoundationModelsManaging
@@ -26,6 +27,7 @@ final class RosterViewModel {
     var showAIErrorAlert: Bool = false
     var isAILoading: Bool = false
 
+    /// Calls FoundationModels to generate a team name based on the currently selected roster information
     func generateTeamName() async {
         isAILoading = true
         generatedTeamName = nil

@@ -5,6 +5,7 @@
 //  Created by Trenton Lazorchak on 6/22/25.
 //
 
+/// A model for user information retrieved from Sleeper
 struct SleeperUserModel: Codable {
     let userID: String
     let displayName: String
@@ -19,6 +20,7 @@ struct SleeperUserModel: Codable {
     }
 }
 
+/// A model for metadata information retrieved from Sleeper
 struct MetaData: Codable {
     let teamName: String?
 

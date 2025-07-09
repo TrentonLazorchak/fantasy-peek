@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// View model for the Rosters view
 @Observable @MainActor
 final class RostersViewModel {
 
@@ -42,6 +43,8 @@ final class RostersViewModel {
         return teams[selectedRosterIndex]
     }
 
+    /// Loads rosters from the sleeper manager file
+    /// - Parameter isRefresh: Whether or not the call to load is a refresh
     func loadRosters(isRefresh: Bool = false) async {
         viewState = isRefresh ? .loading : .initial
 
@@ -61,6 +64,12 @@ final class RostersViewModel {
         }
     }
 
+    /// Used to fetch from the sleeper manager any data needed for the TeamViewModels used by the tab bar views
+    /// - Parameters:
+    ///   - sleeperManager: The manager file to fetch from
+    ///   - leagueID: The league id to get the roster and league information from
+    ///   - useCache: Whether or not these network calls should use the cache
+    /// - Returns: The teams as TeamViewModels
     static func getTeams(sleeperManager: SleeperManaging, leagueID: String, useCache: Bool) async throws -> [TeamViewModel] {
         let rosters = try await sleeperManager.fetchAllRosters(leagueID: leagueID, useCache: useCache)
         let nflPlayers = try await sleeperManager.fetchAllNFLPlayers()

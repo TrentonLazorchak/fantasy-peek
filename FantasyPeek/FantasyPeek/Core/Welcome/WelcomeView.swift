@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The introductory view to the app
 struct WelcomeView: View {
 
     @Binding var leagueID: String?
@@ -29,7 +30,7 @@ struct WelcomeView: View {
 
                 VStack(spacing: 16) {
                     NavigationLink("Enter Username") {
-                        UserView(viewModel: .init(), leagueID: $leagueID)
+                        UserInputView(viewModel: .init(), leagueID: $leagueID)
                     }
                     .tint(.purple)
 

@@ -7,6 +7,7 @@
 
 typealias SleeperPlayersResponse = [String: SleeperPlayer]
 
+/// A model for player information retrieved from Sleeper
 struct SleeperPlayer: Codable {
     let playerID: String
     let fullName: String?

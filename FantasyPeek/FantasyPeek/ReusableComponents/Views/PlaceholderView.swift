@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view to be shown for images as a placeholder
 struct PlaceholderView: View {
     @Environment(\.colorScheme) var colorScheme
     var dynamicColor: Color {

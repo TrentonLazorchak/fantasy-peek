@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view that displays an individual league item
 struct IndividualLeagueView: View {
 
     let leagueName: String

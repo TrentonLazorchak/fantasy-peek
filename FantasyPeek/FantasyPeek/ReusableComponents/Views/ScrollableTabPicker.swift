@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A horizontally scrollable tab bar
 struct ScrollableTabPicker: View {
     @Binding var selectedIndex: Int
     @Binding var didFinishLoading: Bool

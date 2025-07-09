@@ -30,7 +30,7 @@ final class MockSleeperManager: SleeperManaging {
         self.nflPlayersResult = nflPlayersResult
     }
 
-    func fetchAllLeagues(username: String, season: String) async throws -> [SleeperLeagueInfoModel]? {
+    func fetchAllLeagues(username: String, season: String, useCache: Bool) async throws -> [SleeperLeagueInfoModel]? {
         switch leaguesResult {
         case .success(let success): return success
         case .failure(let error): throw error

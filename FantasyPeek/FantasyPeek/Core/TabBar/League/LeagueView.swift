@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// View for displaying a fantasy league information and run AI tasks
 struct LeagueView: View {
 
     @State var viewModel: LeagueViewModel

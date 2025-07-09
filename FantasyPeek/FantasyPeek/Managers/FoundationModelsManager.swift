@@ -34,7 +34,7 @@ final class FoundationModelsManager: FoundationModelsManaging {
             throw FoundationModelsError.appleIntelligenceNotEnabled
         case .unavailable(.modelNotReady):
             throw FoundationModelsError.modelNotReady
-        case .unavailable(let other):
+        case .unavailable:
             throw FoundationModelsError.unknown
         }
     }

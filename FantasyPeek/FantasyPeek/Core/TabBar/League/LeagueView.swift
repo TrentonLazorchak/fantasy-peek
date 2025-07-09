@@ -91,7 +91,7 @@ struct LeagueView: View {
                     }
                     .refreshable {
                         Task {
-                            await viewModel.fetchLeagueInfo(isRefresh: true)
+                            await viewModel.loadLeagueInfo(isRefresh: true)
                         }
                     }
                 }
@@ -108,7 +108,7 @@ struct LeagueView: View {
                         .font(.title)
                     Button("Retry") {
                         Task {
-                            await viewModel.fetchLeagueInfo()
+                            await viewModel.loadLeagueInfo()
                         }
                     }
                 }
@@ -116,7 +116,7 @@ struct LeagueView: View {
         }
         .onFirstAppear {
             Task {
-                await viewModel.fetchLeagueInfo()
+                await viewModel.loadLeagueInfo()
             }
         }
         .alert(isPresented: $viewModel.showAIErrorAlert) {

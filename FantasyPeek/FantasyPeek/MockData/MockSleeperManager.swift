@@ -97,7 +97,7 @@ final class MockSleeperManager: SleeperManaging {
         
         let rostersModel: [SleeperRosterModel] = [
             .init(id: 123,
-                  ownerID: "OwnerID",
+                  ownerID: "UserID",
                   leagueID: "LeagueID",
                   starters: ["Player"],
                   players: ["Bench"],

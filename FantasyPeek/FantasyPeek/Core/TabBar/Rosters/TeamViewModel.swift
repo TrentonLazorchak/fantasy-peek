@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TeamViewModel {
+struct TeamViewModel: Equatable {
     let id: UUID = UUID()
     let userDisplayName: String
     let teamName: String?
@@ -53,7 +53,7 @@ struct TeamViewModel {
     }
 }
 
-struct PlayerViewModel {
+struct PlayerViewModel: Equatable {
     let playerID: String
     let name: String?
     let position: String?

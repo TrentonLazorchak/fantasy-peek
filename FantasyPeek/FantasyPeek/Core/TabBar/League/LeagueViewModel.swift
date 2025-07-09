@@ -41,7 +41,7 @@ final class LeagueViewModel {
         case failure
     }
 
-    func fetchLeagueInfo(isRefresh: Bool = false) async {
+    func loadLeagueInfo(isRefresh: Bool = false) async {
         viewState = isRefresh ? .loading : .initial
 
         do {

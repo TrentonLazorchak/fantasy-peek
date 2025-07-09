@@ -129,9 +129,16 @@ struct LeagueView: View {
 }
 
 #Preview("Success") {
-    LeagueView(viewModel: .init(sleeperManager: MockSleeperManager.sampleSuccess, leagueID: "Test"))
+    LeagueView(viewModel: .init(
+        sleeperManager: MockSleeperManager.sampleSuccess,
+        foundationModelsManager: MockFoundationModelsManager.sampleSuccess,
+        leagueID: "Test")
+    )
 }
 
 #Preview("Failure") {
-    LeagueView(viewModel: .init(sleeperManager: MockSleeperManager.sampleFailure, leagueID: "Test"))
+    LeagueView(viewModel: .init(
+        sleeperManager: MockSleeperManager.sampleFailure,
+        foundationModelsManager: MockFoundationModelsManager.sampleFailure,
+        leagueID: "Test"))
 }

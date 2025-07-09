@@ -99,7 +99,7 @@ struct RosterSkeletonView: View {
             losses: 2,
             ties: 3,
             index: 0
-        ), refreshAction: { _ in }))
+        ), refreshAction: { _ in }, foundationModelsManager: MockFoundationModelsManager.sampleSuccess))
     }
 }
 

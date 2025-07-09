@@ -24,7 +24,7 @@ struct RosterView: View {
                     }
                     .accessibilityLabel("Copy generated name")
                 }
-            } else if viewModel.isAILoading {
+            } else if viewModel.isGenerateTeamNameLoading {
                 Text("Loading...")
             }
             Button("AI Generate a Team Name") {
@@ -33,9 +33,14 @@ struct RosterView: View {
                 }
             }
             .buttonStyle(.borderedProminent)
-            .controlSize(.regular)
 
-            // TODO: Rate my team with a sheet that pops up
+            Button("Rate My Team") {
+                Task {
+                    await viewModel.rateMyTeam()
+                }
+            }
+            .buttonStyle(.borderedProminent)
+
             // TODO: AI Rate My Team
 
             List {
@@ -62,6 +67,9 @@ struct RosterView: View {
                   message: Text(viewModel.aiError ?? "An unknown error occurred."),
                   dismissButton: .default(Text("OK")))
         }
+        .sheet(isPresented: $viewModel.showAIModal) {
+            AIModalView(title: viewModel.aiModalTitle, bodyText: viewModel.aiModalBody)
+        }
     }
 
 }
@@ -80,7 +88,7 @@ struct RosterSkeletonView: View {
             losses: 10,
             ties: 10,
             index: 0
-        ), refreshAction: { _ in }))
+        ), refreshAction: { _ in }, updateLoadingAction: { _ in }))
         .scrollDisabled(true)
         .redacted(reason: .placeholder)
     }
@@ -99,7 +107,7 @@ struct RosterSkeletonView: View {
             losses: 2,
             ties: 3,
             index: 0
-        ), refreshAction: { _ in }))
+        ), refreshAction: { _ in }, updateLoadingAction: { _ in }))
     }
 }
 

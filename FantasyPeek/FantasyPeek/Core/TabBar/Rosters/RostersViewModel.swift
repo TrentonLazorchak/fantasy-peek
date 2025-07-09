@@ -60,6 +60,10 @@ final class RostersViewModel {
             viewState = .failure
         }
     }
+    
+    func updateLoadingState(isLoading: Bool) {
+        viewState = isLoading ? .loading : .loaded
+    }
 
     static func getTeams(sleeperManager: SleeperManaging, leagueID: String, useCache: Bool) async throws -> [TeamViewModel] {
         let rosters = try await sleeperManager.fetchAllRosters(leagueID: leagueID, useCache: useCache)

@@ -55,7 +55,6 @@ struct LeagueView: View {
                             }
                         }
                         .buttonStyle(.borderedProminent)
-                        .controlSize(.regular)
 
                         // TODO: Rank Teams
                         // TODO: Roast League

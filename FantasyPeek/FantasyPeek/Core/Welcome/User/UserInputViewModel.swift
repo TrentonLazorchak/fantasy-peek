@@ -1,5 +1,5 @@
 //
-//  UserViewModel.swift
+//  UserInputViewModel.swift
 //  FantasyPeek
 //
 //  Created by Trenton Lazorchak on 6/11/25.
@@ -8,8 +8,9 @@
 import Observation
 import Foundation
 
+/// The view model for the User Input view
 @Observable @MainActor
-final class UserViewModel {
+final class UserInputViewModel {
 
     let sleeperManager: SleeperManaging
     init(manager: SleeperManaging = SleeperManager()) {
@@ -30,12 +31,15 @@ final class UserViewModel {
         case failure
     }
 
-    func fetchSleeperLeaguesWithUID() async {
+    /// Loads leagues from sleeper based on the user id or username
+    func loadSleeperLeaguesWithUID() async {
         leagues = nil
         viewState = .loading
 
         do {
-            if let sleeperLeagues = try await sleeperManager.fetchAllLeagues(username: username, season: selectedYear) {
+            if let sleeperLeagues = try await sleeperManager.fetchAllLeagues(
+                username: username, season: selectedYear, useCache: false
+            ) {
                 leagues = sleeperLeagues.map { league in
                         .init(sleeperLeagueInfo: league)
                 }

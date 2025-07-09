@@ -7,11 +7,12 @@
 
 import SwiftUI
 
+/// A view that displays an individual league item
 struct IndividualLeagueView: View {
 
     let leagueName: String
     let leagueAvatar: String?
-    
+
     @Environment(\.colorScheme) var colorScheme
     var dynamicColor: Color {
         colorScheme == .dark ? .white : .black
@@ -27,10 +28,20 @@ struct IndividualLeagueView: View {
             }
             .frame(width: 50, height: 50)
 
+            Spacer()
+
             Text("\(leagueName)")
                 .font(.headline)
                 .foregroundStyle(dynamicColor)
+
+            Spacer()
         }
+        .padding()
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(.primary, lineWidth: 1)
+        )
+        .padding(.horizontal, 24)
     }
 }
 

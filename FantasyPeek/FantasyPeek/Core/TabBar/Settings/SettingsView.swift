@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view showing settings options for the app
 struct SettingsView: View {
 
     @Binding var leagueID: String?

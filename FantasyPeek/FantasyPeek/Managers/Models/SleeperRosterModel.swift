@@ -5,6 +5,7 @@
 //  Created by Trenton Lazorchak on 6/25/25.
 //
 
+/// A model for roster information retrieved from Sleeper
 struct SleeperRosterModel: Codable {
     let id: Int
     let ownerID: String?
@@ -27,6 +28,7 @@ struct SleeperRosterModel: Codable {
     }
 }
 
+/// A model for roster settings information retrieved from Sleeper
 struct SleeperRosterSettings: Codable {
     let wins: Int?
     let losses: Int?

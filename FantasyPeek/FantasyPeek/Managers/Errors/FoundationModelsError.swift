@@ -5,6 +5,7 @@
 //  Created by Trenton Lazorchak on 7/2/25.
 //
 
+/// Errors from calling FoundationModels to check for if the AI is ready and able to be used
 enum FoundationModelsError: Error {
     // Device is not eligible for AI
     case deviceNotEligible
@@ -16,17 +17,17 @@ enum FoundationModelsError: Error {
     // The model is unavailable for an unknown reason.
     case unknown
 
-    // TODO: Should include instructions on how to resolve each
+    /// A description of the error
     var localizedDescription: String {
         switch self {
         case .deviceNotEligible:
-            return "This device is not eligible for Apple Intelligence."
+            return "This device is not eligible for Apple Intelligence. Please check if your device model supports Apple Intelligence features."
         case .appleIntelligenceNotEnabled:
-            return "Apple Intelligence is not enabled on this device."
+            return "Apple Intelligence is not enabled on this device. Enable Apple Intelligence in your device settings to continue."
         case .modelNotReady:
-            return "The model is not ready."
+            return "The model is not ready. Please wait for the model to finish downloading or try restarting your device."
         case .unknown:
-            return "The model is unavailable for an unknown reason."
+            return "The model is unavailable for an unknown reason. Try restarting your device or check for software updates."
         }
     }
 }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view modifier to allow option to only apply if a Bool condition is met
 extension View {
     @ViewBuilder
     func `if`<Content: View>(

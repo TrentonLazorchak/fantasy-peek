@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct TeamViewModel {
+/// A view model used to store the info used by the UI for a team
+struct TeamViewModel: Equatable {
     let id: UUID = UUID()
     let userDisplayName: String
     let teamName: String?
@@ -19,6 +20,7 @@ struct TeamViewModel {
     let ties: Int
     let index: Int
 
+    /// A summary of the team information used by FoundationalModels
     var summary: String {
         var lines: [String] = []
 
@@ -32,7 +34,7 @@ struct TeamViewModel {
                 lines.append("• \(player.summary)")
             }
         }
-        
+
         if !starters.isEmpty {
             lines.append("Starters:")
             for player in starters {
@@ -43,9 +45,7 @@ struct TeamViewModel {
         if !bench.isEmpty {
             lines.append("Bench:")
             for player in bench {
-                if !player.summary.contains("Downs") {
-                    lines.append("• \(player.summary)")
-                }
+                lines.append("• \(player.summary)")
             }
         }
 
@@ -53,12 +53,14 @@ struct TeamViewModel {
     }
 }
 
-struct PlayerViewModel {
+/// A view model storing the player information
+struct PlayerViewModel: Equatable {
     let playerID: String
     let name: String?
     let position: String?
     let team: String?
 
+    /// A summary of the player information used by FoundationalModels
     var summary: String {
         let displayName = name ?? "Unknown"
         let displayPosition = position ?? "-"

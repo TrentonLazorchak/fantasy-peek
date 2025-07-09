@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A reusable view for showing a loading state
 struct LoadingView: View {
     var body: some View {
         Rectangle()

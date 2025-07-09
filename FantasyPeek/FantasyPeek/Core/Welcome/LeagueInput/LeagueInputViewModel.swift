@@ -7,18 +7,7 @@
 
 import Observation
 
-struct LeagueInfoViewModel {
-    let id: String
-    let name: String
-    let avatar: String?
-
-    init(sleeperLeagueInfo: SleeperLeagueInfoModel) {
-        id = sleeperLeagueInfo.leagueID
-        name = sleeperLeagueInfo.name
-        avatar = "\(SleeperManager.avatarBaseURL)/thumbs/\(sleeperLeagueInfo.avatar ?? "")"
-    }
-}
-
+/// The view model for the league input view
 @Observable @MainActor
 final class LeagueInputViewModel {
 
@@ -37,7 +26,8 @@ final class LeagueInputViewModel {
         case failure
     }
 
-    func fetchSleeperLeagueInfo() async {
+    /// Loads the league information for the current league id from Sleeper
+    func loadSleeperLeagueInfo() async {
         leagueInfo = nil
         viewState = .loading
 

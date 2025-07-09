@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view for an individual roster
 struct RosterView: View {
 
     @State var viewModel: RosterViewModel
@@ -17,9 +18,9 @@ struct RosterView: View {
             if let generatedTeamName = viewModel.generatedTeamName {
                 HStack(spacing: 8) {
                     Text("\(generatedTeamName)")
-                    Button(action: {
+                    Button {
                         UIPasteboard.general.string = generatedTeamName
-                    }) {
+                    } label: {
                         Image(systemName: "doc.on.doc")
                     }
                     .accessibilityLabel("Copy generated name")
@@ -35,7 +36,6 @@ struct RosterView: View {
             .buttonStyle(.borderedProminent)
             .controlSize(.regular)
 
-            // TODO: Rate my team with a sheet that pops up
             // TODO: AI Rate My Team
 
             List {
@@ -66,6 +66,7 @@ struct RosterView: View {
 
 }
 
+/// An initial view for a roster view to be displayed before the first load
 struct RosterSkeletonView: View {
     private static let mockPlayer: PlayerViewModel = .init(playerID: "123", name: nil, position: nil, team: nil)
 
@@ -99,7 +100,7 @@ struct RosterSkeletonView: View {
             losses: 2,
             ties: 3,
             index: 0
-        ), refreshAction: { _ in }))
+        ), refreshAction: { _ in }, foundationModelsManager: MockFoundationModelsManager.sampleSuccess))
     }
 }
 
@@ -108,4 +109,3 @@ struct RosterSkeletonView: View {
         RosterSkeletonView()
     }
 }
-

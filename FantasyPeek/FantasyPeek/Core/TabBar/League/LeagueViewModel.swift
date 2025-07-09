@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// View model for the league view
 @Observable @MainActor
 final class LeagueViewModel {
 
@@ -14,16 +15,16 @@ final class LeagueViewModel {
     let foundationModelsManager: FoundationModelsManaging
     let leagueID: String?
 
-    init(manager: SleeperManaging = SleeperManager(),
+    init(sleeperManager: SleeperManaging = SleeperManager(),
          foundationModelsManager: FoundationModelsManaging = FoundationModelsManager(),
          leagueID: String?) {
-        self.sleeperManager = manager
+        self.sleeperManager = sleeperManager
         self.foundationModelsManager = foundationModelsManager
         self.leagueID = leagueID
     }
 
     var leagueAvatarURLString: String?
-    var leagueName: String = ""
+    var leagueName: String = "League Name"
     var season: String?
     var teams: [TeamViewModel] = []
 
@@ -41,7 +42,9 @@ final class LeagueViewModel {
         case failure
     }
 
-    func fetchLeagueInfo(isRefresh: Bool = false) async {
+    /// Loads league info from the sleeper manager
+    /// - Parameter isRefresh: Whether or not this call is a refresh
+    func loadLeagueInfo(isRefresh: Bool = false) async {
         viewState = isRefresh ? .loading : .initial
 
         do {
@@ -63,13 +66,16 @@ final class LeagueViewModel {
         }
     }
 
+    /// Requests FoundationModels for a league name based on the league information
     func generateLeagueName() async {
         isAILoading = true
         generatedLeagueName = nil
         do {
             let prompt = "Generate a creative fantasy football league name. Only return the name. Maximum three words."
             let instructions = """
-            You are an assistant in a fantasy football app. Based on the following league data, suggest a creative and relevant league name. The name should be no more than three words long. Only output the league name — no explanations or extra text.
+            You are an assistant in a fantasy football app. \n
+            Based on the following league data, suggest a creative and relevant league name. \n
+            The name should be no more than three words long. Only output the league name — no explanations or extra text.
 
             Here is the league:
 

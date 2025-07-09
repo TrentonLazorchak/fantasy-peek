@@ -7,13 +7,14 @@
 
 import SwiftUI
 
+/// A player's football position
 enum Position: String, ExpressibleByStringLiteral {
-    case qb = "QB"
-    case rb = "RB"
-    case wr = "WR"
-    case te = "TE"
-    case k = "K"
-    case def = "DEF"
+    case quarterBack = "QB"
+    case runningBack = "RB"
+    case wideReceiver = "WR"
+    case tightEnd = "TE"
+    case kicker = "K"
+    case defense = "DEF"
     case unknown = "N/A"
 
     init(from positionString: String?) {
@@ -26,17 +27,19 @@ enum Position: String, ExpressibleByStringLiteral {
 
     var color: Color {
         switch self {
-        case .qb: .purple
-        case .rb: .green
-        case .wr: .orange
-        case .te: .blue
-        case .k: .red
-        case .def: .brown
+        case .quarterBack: .purple
+        case .runningBack: .green
+        case .wideReceiver: .orange
+        case .tightEnd: .blue
+        case .kicker: .red
+        case .defense: .brown
         case .unknown: .gray
         }
     }
 }
 
+// swiftlint:disable identifier_name
+/// A players NFL team they play for
 enum NFLTeam: String, ExpressibleByStringLiteral {
     case sf = "SF"
     case kc = "KC"
@@ -71,6 +74,7 @@ enum NFLTeam: String, ExpressibleByStringLiteral {
     case hou = "HOU"
     case ari = "ARI"
     case unknown = "N/A"
+    // swiftlint:enable identifier_name
 
     init(from abbreviation: String?) {
         self = NFLTeam(rawValue: abbreviation?.uppercased() ?? "") ?? .unknown
@@ -157,6 +161,7 @@ enum NFLTeam: String, ExpressibleByStringLiteral {
     }
 }
 
+/// A view used to display an individual player item
 struct PlayerView: View {
 
     let position: Position
@@ -181,7 +186,7 @@ struct PlayerView: View {
             .frame(width: 50, height: 50)
 
             // Use team name for the defense
-            if position == .def {
+            if position == .defense {
                 Text(team.fullName)
             } else {
                 Text(name)
@@ -204,5 +209,5 @@ struct PlayerView: View {
 }
 
 #Preview {
-    PlayerView(position: .qb, name: "Trenton Lazorchak", team: .was)
+    PlayerView(position: .quarterBack, name: "Trenton Lazorchak", team: .was)
 }

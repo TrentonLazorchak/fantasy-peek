@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// View for displaying a fantasy league information and run AI tasks
 struct LeagueView: View {
 
     @State var viewModel: LeagueViewModel
@@ -38,9 +39,9 @@ struct LeagueView: View {
                         if let generatedLeagueName = viewModel.generatedLeagueName {
                             HStack(spacing: 8) {
                                 Text("\(generatedLeagueName)")
-                                Button(action: {
+                                Button {
                                     UIPasteboard.general.string = generatedLeagueName
-                                }) {
+                                } label: {
                                     Image(systemName: "doc.on.doc")
                                 }
                                 .accessibilityLabel("Copy generated name")
@@ -91,9 +92,12 @@ struct LeagueView: View {
                     }
                     .refreshable {
                         Task {
-                            await viewModel.fetchLeagueInfo(isRefresh: true)
+                            await viewModel.loadLeagueInfo(isRefresh: true)
                         }
                     }
+                }
+                .if(viewModel.viewState == .initial) {
+                    $0.redacted(reason: .placeholder)
                 }
 
                 if viewModel.viewState == .loading {
@@ -105,7 +109,7 @@ struct LeagueView: View {
                         .font(.title)
                     Button("Retry") {
                         Task {
-                            await viewModel.fetchLeagueInfo()
+                            await viewModel.loadLeagueInfo()
                         }
                     }
                 }
@@ -113,7 +117,7 @@ struct LeagueView: View {
         }
         .onFirstAppear {
             Task {
-                await viewModel.fetchLeagueInfo()
+                await viewModel.loadLeagueInfo()
             }
         }
         .alert(isPresented: $viewModel.showAIErrorAlert) {
@@ -125,6 +129,17 @@ struct LeagueView: View {
 
 }
 
-#Preview {
-    LeagueView(viewModel: .init(leagueID: "1182862660101533696"))
+#Preview("Success") {
+    LeagueView(viewModel: .init(
+        sleeperManager: MockSleeperManager.sampleSuccess,
+        foundationModelsManager: MockFoundationModelsManager.sampleSuccess,
+        leagueID: "Test")
+    )
+}
+
+#Preview("Failure") {
+    LeagueView(viewModel: .init(
+        sleeperManager: MockSleeperManager.sampleFailure,
+        foundationModelsManager: MockFoundationModelsManager.sampleFailure,
+        leagueID: "Test"))
 }

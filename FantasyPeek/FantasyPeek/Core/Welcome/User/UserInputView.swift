@@ -1,5 +1,5 @@
 //
-//  UserView.swift
+//  UserInputView.swift
 //  FantasyPeek
 //
 //  Created by Trenton Lazorchak on 6/11/25.
@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct UserView: View {
+/// A view that allows the person to input their username or user id, and season year, and retrieve leagues
+struct UserInputView: View {
 
-    @State var viewModel: UserViewModel
+    @State var viewModel: UserInputViewModel
     @Binding var leagueID: String?
 
     var body: some View {
         ZStack {
-            // TODO: Make it so keyboard doesn't shrink screen and also can dismiss keyboard on tap outside
-            VStack {
+            ScrollView {
                 Text("Find Your Leagues")
                     .font(.system(size: 40, weight: .black))
                     .multilineTextAlignment(.center)
@@ -29,7 +29,7 @@ struct UserView: View {
                     .padding(.top, 20)
 
                 Picker("Select Year", selection: $viewModel.selectedYear) {
-                    ForEach(UserViewModel.selectableYears, id: \.self) { year in
+                    ForEach(UserInputViewModel.selectableYears, id: \.self) { year in
                         Text(year).tag(year)
                     }
                 }
@@ -38,7 +38,7 @@ struct UserView: View {
 
                 Button("Load Sleeper Leagues") {
                     Task {
-                        await viewModel.fetchSleeperLeaguesWithUID()
+                        await viewModel.loadSleeperLeaguesWithUID()
                     }
                 }
                 .buttonStyle(.borderedProminent)
@@ -47,14 +47,13 @@ struct UserView: View {
 
                 if let leagues = viewModel.leagues,
                    viewModel.viewState == .loaded {
-                    List {
-                        ForEach(leagues, id: \.id) { league in
-                            Button {
-                                leagueID = league.id
-                            } label: {
-                                IndividualLeagueView(leagueName: league.name, leagueAvatar: league.avatar)
-                            }
+                    ForEach(leagues, id: \.id) { league in
+                        Button {
+                            leagueID = league.id
+                        } label: {
+                            IndividualLeagueView(leagueName: league.name, leagueAvatar: league.avatar)
                         }
+                        .buttonStyle(.plain)
                     }
                 } else if viewModel.viewState == .empty {
                     Text("No leagues returned")
@@ -67,6 +66,8 @@ struct UserView: View {
 
                 Spacer()
             }
+            .scrollBounceBehavior(.basedOnSize)
+            .scrollDismissesKeyboard(.immediately)
             .navigationTitle("Leagues for User")
             .padding()
 
@@ -78,6 +79,12 @@ struct UserView: View {
 
 }
 
-#Preview {
-    UserView(viewModel: .init(), leagueID: .constant(nil))
+#Preview("Success") {
+    @Previewable @State var leagueID: String? = "Test"
+    UserInputView(viewModel: .init(manager: MockSleeperManager.sampleSuccess), leagueID: $leagueID)
+}
+
+#Preview("Failure") {
+    @Previewable @State var leagueID: String?
+    UserInputView(viewModel: .init(manager: MockSleeperManager.sampleFailure), leagueID: $leagueID)
 }

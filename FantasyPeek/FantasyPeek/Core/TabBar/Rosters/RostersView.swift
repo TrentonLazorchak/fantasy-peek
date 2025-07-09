@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// View that is ued to display the rosters in a league
 struct RostersView: View {
 
     @State var viewModel: RostersViewModel
@@ -16,6 +17,7 @@ struct RostersView: View {
             switch viewModel.viewState {
             case .initial, .loaded, .loading:
                 VStack {
+                    // Username picker
                     ScrollableTabPicker(
                         selectedIndex: $viewModel.selectedRosterIndex,
                         didFinishLoading: $viewModel.didFinishLoading,
@@ -28,7 +30,7 @@ struct RostersView: View {
                     } else {
                         TabView(selection: $viewModel.selectedRosterIndex) {
                             ForEach(viewModel.teams, id: \.id) { team in
-                                RosterView(viewModel: .init(team: team, refreshAction: viewModel.fetchRosters))
+                                RosterView(viewModel: .init(team: team, refreshAction: viewModel.loadRosters))
                                     .tag(team.index)
                             }
                         }
@@ -50,7 +52,7 @@ struct RostersView: View {
                         .font(.title)
                     Button("Retry") {
                         Task {
-                            await viewModel.fetchRosters()
+                            await viewModel.loadRosters()
                         }
                     }
                 }
@@ -58,7 +60,7 @@ struct RostersView: View {
         }
         .onFirstAppear {
             Task {
-                await viewModel.fetchRosters()
+                await viewModel.loadRosters()
             }
         }
         .toolbar {
@@ -78,8 +80,14 @@ struct RostersView: View {
 
 }
 
-#Preview {
+#Preview("Success") {
     NavigationView {
-        RostersView(viewModel: .init(leagueID: "1182862660101533696"))
+        RostersView(viewModel: .init(sleeperManager: MockSleeperManager.sampleSuccess, leagueID: "Test"))
+    }
+}
+
+#Preview("Failure") {
+    NavigationView {
+        RostersView(viewModel: .init(sleeperManager: MockSleeperManager.sampleFailure, leagueID: "Test"))
     }
 }

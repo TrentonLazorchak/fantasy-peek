@@ -263,7 +263,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if [ -f /opt/homebrew/bin/swiftlint ]; then\n#  /opt/homebrew/bin/swiftlint\n#elif [ -f /usr/local/bin/swiftlint ]; then\n#  /usr/local/bin/swiftlint\n#else\n#  echo \"warning: SwiftLint not installed, download from #https://github.com/realm/SwiftLint\"\n#fi\n#\n\n\nif test -d \"/opt/homebrew/bin/\"; then\n    PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n#\"if test -d \\\"/opt/homebrew/bin/\\\"; then\\n  PATH=\\\"/opt/homebrew/bin/:${PATH}\\\"\\nfi\\n\\nexport PATH\\n\\nif which swiftlint >/dev/null; then\\n  swiftlint\\nelse\\n  echo \\\"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\\\"\\nfi\\n\"\n";
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n    PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

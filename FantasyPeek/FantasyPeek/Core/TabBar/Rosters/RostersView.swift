@@ -28,7 +28,7 @@ struct RostersView: View {
                     } else {
                         TabView(selection: $viewModel.selectedRosterIndex) {
                             ForEach(viewModel.teams, id: \.id) { team in
-                                RosterView(viewModel: .init(team: team, refreshAction: viewModel.fetchRosters))
+                                RosterView(viewModel: .init(team: team, refreshAction: viewModel.loadRosters))
                                     .tag(team.index)
                             }
                         }
@@ -50,7 +50,7 @@ struct RostersView: View {
                         .font(.title)
                     Button("Retry") {
                         Task {
-                            await viewModel.fetchRosters()
+                            await viewModel.loadRosters()
                         }
                     }
                 }
@@ -58,7 +58,7 @@ struct RostersView: View {
         }
         .onFirstAppear {
             Task {
-                await viewModel.fetchRosters()
+                await viewModel.loadRosters()
             }
         }
         .toolbar {
@@ -80,12 +80,12 @@ struct RostersView: View {
 
 #Preview("Success") {
     NavigationView {
-        RostersView(viewModel: .init(manager: MockSleeperManager.sampleSuccess, leagueID: "Test"))
+        RostersView(viewModel: .init(sleeperManager: MockSleeperManager.sampleSuccess, leagueID: "Test"))
     }
 }
 
 #Preview("Failure") {
     NavigationView {
-        RostersView(viewModel: .init(manager: MockSleeperManager.sampleFailure, leagueID: "Test"))
+        RostersView(viewModel: .init(sleeperManager: MockSleeperManager.sampleFailure, leagueID: "Test"))
     }
 }

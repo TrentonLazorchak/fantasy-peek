@@ -13,8 +13,8 @@ final class RostersViewModel {
     let sleeperManager: SleeperManaging
     let leagueID: String?
 
-    init(manager: SleeperManaging = SleeperManager(), leagueID: String?) {
-        self.sleeperManager = manager
+    init(sleeperManager: SleeperManaging = SleeperManager(), leagueID: String?) {
+        self.sleeperManager = sleeperManager
         self.leagueID = leagueID
     }
 
@@ -42,7 +42,7 @@ final class RostersViewModel {
         return teams[selectedRosterIndex]
     }
 
-    func fetchRosters(isRefresh: Bool = false) async {
+    func loadRosters(isRefresh: Bool = false) async {
         viewState = isRefresh ? .loading : .initial
 
         do {

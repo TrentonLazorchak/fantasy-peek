@@ -13,6 +13,7 @@ import Foundation
 @MainActor
 @Suite("CacheManagerTests")
 struct CacheManagerTests {
+
     struct DummyCodable: Codable, Equatable {
         let name: String
         let value: Int
@@ -70,4 +71,5 @@ struct CacheManagerTests {
         #expect(decoded == dummy, "Decoded data should match original codable struct")
         clearCache(forKey: key)
     }
+
 }

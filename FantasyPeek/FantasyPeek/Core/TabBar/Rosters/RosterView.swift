@@ -35,7 +35,6 @@ struct RosterView: View {
             .buttonStyle(.borderedProminent)
             .controlSize(.regular)
 
-            // TODO: Rate my team with a sheet that pops up
             // TODO: AI Rate My Team
 
             List {

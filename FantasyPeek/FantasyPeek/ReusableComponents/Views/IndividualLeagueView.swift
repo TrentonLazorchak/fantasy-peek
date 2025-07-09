@@ -26,11 +26,21 @@ struct IndividualLeagueView: View {
                 PlaceholderView()
             }
             .frame(width: 50, height: 50)
+            
+            Spacer()
 
             Text("\(leagueName)")
                 .font(.headline)
                 .foregroundStyle(dynamicColor)
+            
+            Spacer()
         }
+        .padding()
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(.primary, lineWidth: 1)
+        )
+        .padding(.horizontal, 24)
     }
 }
 

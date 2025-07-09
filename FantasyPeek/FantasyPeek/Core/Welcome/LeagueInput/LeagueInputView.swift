@@ -14,39 +14,44 @@ struct LeagueInputView: View {
 
     var body: some View {
         ZStack {
-            VStack(spacing: 20) {
-                Text("Find Your League Info")
-                    .font(.system(size: 40, weight: .black))
-                    .multilineTextAlignment(.center)
-
-                TextField("Enter Sleeper League ID", text: $viewModel.leagueID)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-
-                Button("Load Sleeper League Info") {
-                    Task {
-                        await viewModel.loadSleeperLeagueInfo()
-                    }
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-
-                if let leagueInfo = viewModel.leagueInfo {
-                    Button {
-                        leagueID = leagueInfo.id
-                    } label: {
-                        IndividualLeagueView(leagueName: leagueInfo.name, leagueAvatar: leagueInfo.avatar)
-                    }
-                } else if viewModel.viewState == .failure {
-                    Text("There was an error loading the sleeper league info.")
-                        .foregroundColor(.red)
+            ScrollView {
+                VStack(spacing: 20) {
+                    Text("Find Your League Info")
+                        .font(.system(size: 40, weight: .black))
+                        .multilineTextAlignment(.center)
+                    
+                    TextField("Enter Sleeper League ID", text: $viewModel.leagueID)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
+                    
+                    Button("Load Sleeper League Info") {
+                        Task {
+                            await viewModel.loadSleeperLeagueInfo()
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .padding(.bottom, 24)
+                    
+                    if let leagueInfo = viewModel.leagueInfo {
+                        Button {
+                            leagueID = leagueInfo.id
+                        } label: {
+                            IndividualLeagueView(leagueName: leagueInfo.name, leagueAvatar: leagueInfo.avatar)
+                        }
+                        .buttonStyle(.plain)
+                    } else if viewModel.viewState == .failure {
+                        Text("There was an error loading the sleeper league info.")
+                            .foregroundColor(.red)
+                            .padding()
+                    }
+                    
+                    Spacer()
                 }
-
-                Spacer()
+                .navigationTitle("League Lookup")
+                .padding()
             }
-            .navigationTitle("League Lookup")
-            .padding()
+            .scrollBounceBehavior(.basedOnSize)
 
             if viewModel.viewState == .loading {
                 LoadingView()

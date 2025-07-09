@@ -95,6 +95,9 @@ struct LeagueView: View {
                         }
                     }
                 }
+                .if(viewModel.viewState == .initial) {
+                    $0.redacted(reason: .placeholder)
+                }
 
                 if viewModel.viewState == .loading {
                     LoadingView()
@@ -125,6 +128,10 @@ struct LeagueView: View {
 
 }
 
-#Preview {
-    LeagueView(viewModel: .init(leagueID: "1182862660101533696"))
+#Preview("Success") {
+    LeagueView(viewModel: .init(sleeperManager: MockSleeperManager.sampleSuccess, leagueID: "Test"))
+}
+
+#Preview("Failure") {
+    LeagueView(viewModel: .init(sleeperManager: MockSleeperManager.sampleFailure, leagueID: "Test"))
 }

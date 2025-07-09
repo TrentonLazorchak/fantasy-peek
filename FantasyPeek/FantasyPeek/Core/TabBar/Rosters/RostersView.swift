@@ -78,8 +78,14 @@ struct RostersView: View {
 
 }
 
-#Preview {
+#Preview("Success") {
     NavigationView {
-        RostersView(viewModel: .init(leagueID: "1182862660101533696"))
+        RostersView(viewModel: .init(manager: MockSleeperManager.sampleSuccess, leagueID: "Test"))
+    }
+}
+
+#Preview("Failure") {
+    NavigationView {
+        RostersView(viewModel: .init(manager: MockSleeperManager.sampleFailure, leagueID: "Test"))
     }
 }

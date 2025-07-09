@@ -14,16 +14,16 @@ final class LeagueViewModel {
     let foundationModelsManager: FoundationModelsManaging
     let leagueID: String?
 
-    init(manager: SleeperManaging = SleeperManager(),
+    init(sleeperManager: SleeperManaging = SleeperManager(),
          foundationModelsManager: FoundationModelsManaging = FoundationModelsManager(),
          leagueID: String?) {
-        self.sleeperManager = manager
+        self.sleeperManager = sleeperManager
         self.foundationModelsManager = foundationModelsManager
         self.leagueID = leagueID
     }
 
     var leagueAvatarURLString: String?
-    var leagueName: String = ""
+    var leagueName: String = "League Name"
     var season: String?
     var teams: [TeamViewModel] = []
 

@@ -55,7 +55,12 @@ struct LeagueInputView: View {
     }
 }
 
-// TODO: Use mock managers for previews
-#Preview {
-    LeagueInputView(viewModel: .init(), leagueID: .constant(nil))
+#Preview("Success") {
+    @Previewable @State var leagueID: String? = nil
+    LeagueInputView(viewModel: .init(manager: MockSleeperManager.sampleSuccess), leagueID: $leagueID)
+}
+
+#Preview("Failure") {
+    @Previewable @State var leagueID: String? = nil
+    LeagueInputView(viewModel: .init(manager: MockSleeperManager.sampleFailure), leagueID: $leagueID)
 }

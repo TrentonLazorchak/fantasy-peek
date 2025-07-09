@@ -78,6 +78,12 @@ struct UserView: View {
 
 }
 
-#Preview {
-    UserView(viewModel: .init(), leagueID: .constant(nil))
+#Preview("Success") {
+    @Previewable @State var leagueID: String? = "Test"
+    UserView(viewModel: .init(manager: MockSleeperManager.sampleSuccess), leagueID: $leagueID)
+}
+
+#Preview("Failure") {
+    @Previewable @State var leagueID: String? = nil
+    UserView(viewModel: .init(manager: MockSleeperManager.sampleFailure), leagueID: $leagueID)
 }

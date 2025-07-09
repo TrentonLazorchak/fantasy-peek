@@ -8,18 +8,11 @@
 import Foundation
 
 protocol SleeperManaging {
-    func fetchAllLeagues(username: String, sport: String, season: String) async throws -> [SleeperLeagueInfoModel]?
+    func fetchAllLeagues(username: String, season: String) async throws -> [SleeperLeagueInfoModel]?
     func fetchLeagueInfo(leagueID: String, useCache: Bool) async throws -> SleeperLeagueInfoModel
     func fetchAllRosters(leagueID: String, useCache: Bool) async throws -> [SleeperRosterModel]
     func fetchAllUsers(leagueID: String, useCache: Bool) async throws -> [SleeperUserModel]
     func fetchAllNFLPlayers() async throws -> SleeperPlayersResponse
-}
-
-extension SleeperManaging {
-    // Provides default values for sport and season. Only "nfl" is available for sport at the moment
-    func fetchAllLeagues(username: String, sport: String = "nfl", season: String) async throws -> [SleeperLeagueInfoModel]? {
-        try await fetchAllLeagues(username: username, sport: sport, season: season)
-    }
 }
 
 final class SleeperManager: SleeperManaging {
@@ -27,13 +20,13 @@ final class SleeperManager: SleeperManaging {
     private static let baseURL = "https://api.sleeper.app/v1"
 
     static let avatarBaseURL = "https://sleepercdn.com/avatars"
-
-    // NOTE: Only support "nfl" for sport right now
-    func fetchAllLeagues(username: String, sport: String, season: String) async throws -> [SleeperLeagueInfoModel]? {
+    
+    func fetchAllLeagues(username: String,season: String) async throws -> [SleeperLeagueInfoModel]? {
         // Call to get user ID from the passed in username
         let userID = try await fetchUser(user: username).userID
 
-        return try await fetch(urlString: "\(Self.baseURL)/user/\(userID)/leagues/\(sport)/\(season)", as: [SleeperLeagueInfoModel]?.self)
+        // TODO: Eventually, once Sleeper supports it, add more sports
+        return try await fetch(urlString: "\(Self.baseURL)/user/\(userID)/leagues/nfl/\(season)", as: [SleeperLeagueInfoModel]?.self)
     }
     
     // User is user id or username

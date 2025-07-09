@@ -18,15 +18,15 @@ struct WelcomeView: View {
                     .font(.system(size: 40, weight: .black))
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 8)
-                
+
                 Text("Take a peek at your fantasy football league, and have fun with some AI features!")
                     .font(.title2).bold()
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
-                
+
                 Text("Currently only supports Sleeper leagues.")
                     .font(.footnote)
-                
+
                 VStack(spacing: 16) {
                     NavigationLink("Enter Username") {
                         UserView(viewModel: .init(), leagueID: $leagueID)

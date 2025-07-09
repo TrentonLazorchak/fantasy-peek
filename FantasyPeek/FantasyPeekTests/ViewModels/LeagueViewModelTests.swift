@@ -22,7 +22,7 @@ struct LeagueViewModelTests {
         await viewModel.loadLeagueInfo(isRefresh: false)
 
         #expect(viewModel.viewState == .loaded)
-        
+
         #expect(viewModel.leagueAvatarURLString == "https://sleepercdn.com/avatars/Avatar")
         #expect(viewModel.leagueName == "Name")
         #expect(viewModel.season == "Season")
@@ -36,8 +36,18 @@ struct LeagueViewModelTests {
         #expect(team.bench.count == 1)
         let starter = team.starters[0]
         let bench = team.bench[0]
-        let expectedStarter: PlayerViewModel = .init(playerID: "PlayerID", name: "FullName", position: "QB", team: "WAS")
-        let expectedBench: PlayerViewModel = .init(playerID: "BenchPlayerID", name: "BenchFullName", position: "RB", team: "BAL")
+        let expectedStarter: PlayerViewModel = .init(
+            playerID: "PlayerID",
+            name: "FullName",
+            position: "QB",
+            team: "WAS"
+        )
+        let expectedBench: PlayerViewModel = .init(
+            playerID: "BenchPlayerID",
+            name: "BenchFullName",
+            position: "RB",
+            team: "BAL"
+        )
         #expect(starter == expectedStarter)
         #expect(bench == expectedBench)
     }
@@ -52,24 +62,30 @@ struct LeagueViewModelTests {
 
         #expect(viewModel.viewState == .failure)
     }
-    
+
     @Test("Generate league name - success scenario")
     func testGenerateLeagueNameSuccess() async {
-        let viewModel = LeagueViewModel(foundationModelsManager: MockFoundationModelsManager.sampleSuccess, leagueID: "123")
-        
+        let viewModel = LeagueViewModel(
+            foundationModelsManager: MockFoundationModelsManager.sampleSuccess,
+            leagueID: "123"
+        )
+
         #expect(viewModel.generatedLeagueName == nil)
-        
+
         await viewModel.generateLeagueName()
-        
+
         #expect(viewModel.generatedLeagueName == "Example Response")
     }
-    
+
     @Test("Generate league name - failure scenario")
     func testGenerateLeagueNameFailure() async {
-        let viewModel = LeagueViewModel(foundationModelsManager: MockFoundationModelsManager.sampleFailure, leagueID: "123")
-        
+        let viewModel = LeagueViewModel(
+            foundationModelsManager: MockFoundationModelsManager.sampleFailure,
+            leagueID: "123"
+        )
+
         await viewModel.generateLeagueName()
-        
+
         #expect(viewModel.generatedLeagueName == nil)
         #expect(viewModel.aiError == FoundationModelsError.appleIntelligenceNotEnabled.localizedDescription)
     }

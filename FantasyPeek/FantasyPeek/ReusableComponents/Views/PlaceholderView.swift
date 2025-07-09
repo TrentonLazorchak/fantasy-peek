@@ -15,7 +15,7 @@ struct PlaceholderView: View {
     var reverseDynamicColor: Color {
         colorScheme == .dark ? .black : .white
     }
-    
+
     var body: some View {
         ZStack {
             Circle()

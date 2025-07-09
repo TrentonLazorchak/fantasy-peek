@@ -22,7 +22,7 @@ struct RostersViewModelTests {
         await viewModel.loadRosters(isRefresh: false)
 
         #expect(viewModel.viewState == .loaded)
-        
+
         #expect(viewModel.teams.count == 1)
 
         let team = viewModel.teams[0]
@@ -33,8 +33,12 @@ struct RostersViewModelTests {
         #expect(team.bench.count == 1)
         let starter = team.starters[0]
         let bench = team.bench[0]
-        let expectedStarter: PlayerViewModel = .init(playerID: "PlayerID", name: "FullName", position: "QB", team: "WAS")
-        let expectedBench: PlayerViewModel = .init(playerID: "BenchPlayerID", name: "BenchFullName", position: "RB", team: "BAL")
+        let expectedStarter: PlayerViewModel = .init(
+            playerID: "PlayerID", name: "FullName", position: "QB", team: "WAS"
+        )
+        let expectedBench: PlayerViewModel = .init(
+            playerID: "BenchPlayerID", name: "BenchFullName", position: "RB", team: "BAL"
+        )
         #expect(starter == expectedStarter)
         #expect(bench == expectedBench)
     }

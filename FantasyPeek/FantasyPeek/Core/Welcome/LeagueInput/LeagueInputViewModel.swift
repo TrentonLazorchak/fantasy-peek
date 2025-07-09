@@ -11,7 +11,7 @@ struct LeagueInfoViewModel: Equatable {
     let id: String
     let name: String
     let avatar: String?
-    
+
     init(id: String, name: String, avatar: String?) {
         self.id = id
         self.name = name

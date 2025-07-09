@@ -10,26 +10,26 @@
 final class MockFoundationModelsManager: FoundationModelsManaging {
 
     let promptResult: Result<String, Error>
-    
+
     init(promptResult: Result<String, Error>) {
         self.promptResult = promptResult
     }
-    
+
     func sendPrompt(prompt: String, instructions: String) async throws -> String {
         switch promptResult {
         case .success(let result): return result
         case .failure(let error): throw error
         }
     }
-    
+
     static var sampleSuccess: MockFoundationModelsManager {
         .init(promptResult: .success("Example Response"))
     }
-    
+
     static var sampleFailure: MockFoundationModelsManager {
         .init(promptResult: .failure(FoundationModelsError.appleIntelligenceNotEnabled))
     }
-    
+
 }
 
 #endif

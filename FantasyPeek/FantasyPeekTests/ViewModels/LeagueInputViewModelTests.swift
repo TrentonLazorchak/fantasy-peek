@@ -12,18 +12,22 @@ import Testing
 @MainActor
 @Suite("LeagueInputViewModelTests")
 struct LeagueInputViewModelTests {
-    
+
     @Test("Load Sleeper League Info - success scenario")
     func loadSleeperLeagueInfoSuccess() async {
         let viewModel = LeagueInputViewModel(manager: MockSleeperManager.sampleSuccess)
-        
+
         #expect(viewModel.viewState == .loaded)
-        
+
         await viewModel.loadSleeperLeagueInfo()
-        
+
         #expect(viewModel.viewState == .loaded)
-        
-        let expectedLeagueInfo = LeagueInfoViewModel(id: "LeagueID", name: "Name", avatar: "https://sleepercdn.com/avatars/thumbs/Avatar")
+
+        let expectedLeagueInfo = LeagueInfoViewModel(
+            id: "LeagueID",
+            name: "Name",
+            avatar: "https://sleepercdn.com/avatars/thumbs/Avatar"
+        )
         #expect(viewModel.leagueInfo == expectedLeagueInfo)
     }
 
@@ -37,5 +41,5 @@ struct LeagueInputViewModelTests {
 
         #expect(viewModel.viewState == .failure)
     }
-    
+
 }

@@ -19,11 +19,11 @@ struct LeagueInputView: View {
                     Text("Find Your League Info")
                         .font(.system(size: 40, weight: .black))
                         .multilineTextAlignment(.center)
-                    
+
                     TextField("Enter Sleeper League ID", text: $viewModel.leagueID)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
-                    
+
                     Button("Load Sleeper League Info") {
                         Task {
                             await viewModel.loadSleeperLeagueInfo()
@@ -32,7 +32,7 @@ struct LeagueInputView: View {
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
                     .padding(.bottom, 24)
-                    
+
                     if let leagueInfo = viewModel.leagueInfo {
                         Button {
                             leagueID = leagueInfo.id
@@ -45,7 +45,7 @@ struct LeagueInputView: View {
                             .foregroundColor(.red)
                             .padding()
                     }
-                    
+
                     Spacer()
                 }
                 .navigationTitle("League Lookup")
@@ -61,11 +61,11 @@ struct LeagueInputView: View {
 }
 
 #Preview("Success") {
-    @Previewable @State var leagueID: String? = nil
+    @Previewable @State var leagueID: String?
     LeagueInputView(viewModel: .init(manager: MockSleeperManager.sampleSuccess), leagueID: $leagueID)
 }
 
 #Preview("Failure") {
-    @Previewable @State var leagueID: String? = nil
+    @Previewable @State var leagueID: String?
     LeagueInputView(viewModel: .init(manager: MockSleeperManager.sampleFailure), leagueID: $leagueID)
 }

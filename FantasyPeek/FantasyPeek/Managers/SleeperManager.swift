@@ -20,15 +20,15 @@ final class SleeperManager: SleeperManaging {
     private static let baseURL = "https://api.sleeper.app/v1"
 
     static let avatarBaseURL = "https://sleepercdn.com/avatars"
-    
-    func fetchAllLeagues(username: String,season: String) async throws -> [SleeperLeagueInfoModel]? {
+
+    func fetchAllLeagues(username: String, season: String) async throws -> [SleeperLeagueInfoModel]? {
         // Call to get user ID from the passed in username
         let userID = try await fetchUser(user: username).userID
 
         // TODO: Eventually, once Sleeper supports it, add more sports
         return try await fetch(urlString: "\(Self.baseURL)/user/\(userID)/leagues/nfl/\(season)", as: [SleeperLeagueInfoModel]?.self)
     }
-    
+
     // User is user id or username
     private func fetchUser(user: String) async throws -> SleeperUserModel {
         try await fetch(urlString: "\(Self.baseURL)/user/\(user)", as: SleeperUserModel.self)

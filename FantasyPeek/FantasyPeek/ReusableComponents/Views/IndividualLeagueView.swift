@@ -11,7 +11,7 @@ struct IndividualLeagueView: View {
 
     let leagueName: String
     let leagueAvatar: String?
-    
+
     @Environment(\.colorScheme) var colorScheme
     var dynamicColor: Color {
         colorScheme == .dark ? .white : .black
@@ -26,13 +26,13 @@ struct IndividualLeagueView: View {
                 PlaceholderView()
             }
             .frame(width: 50, height: 50)
-            
+
             Spacer()
 
             Text("\(leagueName)")
                 .font(.headline)
                 .foregroundStyle(dynamicColor)
-            
+
             Spacer()
         }
         .padding()

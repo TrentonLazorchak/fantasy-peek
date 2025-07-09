@@ -32,7 +32,7 @@ struct TeamViewModel: Equatable {
                 lines.append("• \(player.summary)")
             }
         }
-        
+
         if !starters.isEmpty {
             lines.append("Starters:")
             for player in starters {
@@ -43,9 +43,7 @@ struct TeamViewModel: Equatable {
         if !bench.isEmpty {
             lines.append("Bench:")
             for player in bench {
-                if !player.summary.contains("Downs") {
-                    lines.append("• \(player.summary)")
-                }
+                lines.append("• \(player.summary)")
             }
         }
 

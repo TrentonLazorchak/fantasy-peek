@@ -69,7 +69,9 @@ final class LeagueViewModel {
         do {
             let prompt = "Generate a creative fantasy football league name. Only return the name. Maximum three words."
             let instructions = """
-            You are an assistant in a fantasy football app. Based on the following league data, suggest a creative and relevant league name. The name should be no more than three words long. Only output the league name — no explanations or extra text.
+            You are an assistant in a fantasy football app. \n
+            Based on the following league data, suggest a creative and relevant league name. \n
+            The name should be no more than three words long. Only output the league name — no explanations or extra text.
 
             Here is the league:
 

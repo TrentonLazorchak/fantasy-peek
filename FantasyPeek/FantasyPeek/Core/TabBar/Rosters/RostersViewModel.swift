@@ -103,7 +103,7 @@ final class RostersViewModel {
             let team = TeamViewModel(
                 userDisplayName: userDisplayName,
                 teamName: ownerUser?.metadata?.teamName,
-                avatar:  "\(SleeperManager.avatarBaseURL)/thumbs/\(ownerUser?.avatar ?? "")",
+                avatar: "\(SleeperManager.avatarBaseURL)/thumbs/\(ownerUser?.avatar ?? "")",
                 starters: starters,
                 bench: bench,
                 wins: wins,

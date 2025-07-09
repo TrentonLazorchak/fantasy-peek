@@ -12,7 +12,7 @@ import Testing
 @MainActor
 @Suite("RosterViewModelTests")
 struct RosterViewModelTests {
-    
+
     static private let exampleTeam: TeamViewModel = .init(
         userDisplayName: "",
         teamName: nil,
@@ -32,11 +32,11 @@ struct RosterViewModelTests {
             refreshAction: { _ in },
             foundationModelsManager: MockFoundationModelsManager.sampleSuccess
         )
-        
+
         #expect(viewModel.generatedTeamName == nil)
-        
+
         await viewModel.generateTeamName()
-        
+
         #expect(viewModel.generatedTeamName == "Example Response")
     }
 
@@ -47,9 +47,9 @@ struct RosterViewModelTests {
             refreshAction: { _ in },
             foundationModelsManager: MockFoundationModelsManager.sampleFailure
         )
-        
+
         await viewModel.generateTeamName()
-        
+
         #expect(viewModel.generatedTeamName == nil)
         #expect(viewModel.aiError == FoundationModelsError.appleIntelligenceNotEnabled.localizedDescription)
     }

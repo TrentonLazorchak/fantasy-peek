@@ -38,9 +38,9 @@ struct LeagueView: View {
                         if let generatedLeagueName = viewModel.generatedLeagueName {
                             HStack(spacing: 8) {
                                 Text("\(generatedLeagueName)")
-                                Button(action: {
+                                Button {
                                     UIPasteboard.general.string = generatedLeagueName
-                                }) {
+                                } label: {
                                     Image(systemName: "doc.on.doc")
                                 }
                                 .accessibilityLabel("Copy generated name")

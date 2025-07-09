@@ -84,6 +84,6 @@ struct UserView: View {
 }
 
 #Preview("Failure") {
-    @Previewable @State var leagueID: String? = nil
+    @Previewable @State var leagueID: String?
     UserView(viewModel: .init(manager: MockSleeperManager.sampleFailure), leagueID: $leagueID)
 }

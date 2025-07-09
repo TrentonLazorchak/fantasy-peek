@@ -17,9 +17,9 @@ struct RosterView: View {
             if let generatedTeamName = viewModel.generatedTeamName {
                 HStack(spacing: 8) {
                     Text("\(generatedTeamName)")
-                    Button(action: {
+                    Button {
                         UIPasteboard.general.string = generatedTeamName
-                    }) {
+                    } label: {
                         Image(systemName: "doc.on.doc")
                     }
                     .accessibilityLabel("Copy generated name")
@@ -107,4 +107,3 @@ struct RosterSkeletonView: View {
         RosterSkeletonView()
     }
 }
-

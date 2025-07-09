@@ -17,7 +17,7 @@ final class MockSleeperManager: SleeperManaging {
     let rostersResult: Result<[SleeperRosterModel], Error>
     let usersResult: Result<[SleeperUserModel], Error>
     let nflPlayersResult: Result<SleeperPlayersResponse, Error>
-    
+
     init(leaguesResult: Result<[SleeperLeagueInfoModel]?, Error>,
          leagueInfoResult: Result<SleeperLeagueInfoModel, Error>,
          rostersResult: Result<[SleeperRosterModel], Error>,
@@ -29,42 +29,42 @@ final class MockSleeperManager: SleeperManaging {
         self.usersResult = usersResult
         self.nflPlayersResult = nflPlayersResult
     }
-    
+
     func fetchAllLeagues(username: String, season: String) async throws -> [SleeperLeagueInfoModel]? {
         switch leaguesResult {
         case .success(let success): return success
         case .failure(let error): throw error
         }
     }
-    
+
     func fetchLeagueInfo(leagueID: String, useCache: Bool) async throws -> SleeperLeagueInfoModel {
         switch leagueInfoResult {
         case .success(let success): return success
         case .failure(let error): throw error
         }
     }
-    
+
     func fetchAllRosters(leagueID: String, useCache: Bool) async throws -> [SleeperRosterModel] {
         switch rostersResult {
         case .success(let success): return success
         case .failure(let error): throw error
         }
     }
-    
+
     func fetchAllUsers(leagueID: String, useCache: Bool) async throws -> [SleeperUserModel] {
         switch usersResult {
         case .success(let success): return success
         case .failure(let error): throw error
         }
     }
-    
+
     func fetchAllNFLPlayers() async throws -> SleeperPlayersResponse {
         switch nflPlayersResult {
         case .success(let success): return success
         case .failure(let error): throw error
         }
     }
-    
+
     static var sampleSuccess: MockSleeperManager {
         let leagueInfo = SleeperLeagueInfoModel(
             leagueID: "LeagueID",
@@ -94,7 +94,7 @@ final class MockSleeperManager: SleeperManaging {
                 tradeReviewDays: 123
             )
         )
-        
+
         let rostersModel: [SleeperRosterModel] = [
             .init(id: 123,
                   ownerID: "UserID",
@@ -105,20 +105,20 @@ final class MockSleeperManager: SleeperManaging {
                   metadata: ["Key": "Value"],
                   coOwners: ["CoOwner"])
         ]
-        
+
         let usersModel: [SleeperUserModel] = [
             .init(userID: "UserID",
                   displayName: "DisplayName",
                   avatar: "Avatar",
                   metadata: .init(teamName: "TeamName"))
         ]
-        
+
         let nflPlayersResponse: SleeperPlayersResponse = ["Player": .init(
             playerID: "PlayerID", fullName: "FullName", position: "QB", team: "WAS"
         ), "Bench": .init(
             playerID: "BenchPlayerID", fullName: "BenchFullName", position: "RB", team: "BAL"
         )]
-        
+
         return
             .init(leaguesResult: .success([leagueInfo]),
                   leagueInfoResult: .success(leagueInfo),
@@ -126,7 +126,7 @@ final class MockSleeperManager: SleeperManaging {
                   usersResult: .success(usersModel),
                   nflPlayersResult: .success(nflPlayersResponse))
     }
-    
+
     static var sampleFailure: MockSleeperManager {
         return .init(leaguesResult: .failure(URLError(.badServerResponse)),
                      leagueInfoResult: .failure(URLError(.badServerResponse)),
@@ -134,6 +134,6 @@ final class MockSleeperManager: SleeperManaging {
                      usersResult: .failure(URLError(.badServerResponse)),
                      nflPlayersResult: .failure(URLError(.badServerResponse)))
     }
-    
+
 }
 #endif

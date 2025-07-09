@@ -36,7 +36,8 @@ struct TeamViewModelTests {
             ties: 0,
             index: 0
         )
-        
+
+        // swiftlint:disable:next line_length
         #expect(team.summary == "Team 1: TeamName\nManager: UserDisplayName\nRecord: 0-0-0\nStarters:\n• Name - QB (WAS)\nStarters:\n• Name - QB (WAS)\nBench:\n• BenchName - RB (BAL)")
     }
 

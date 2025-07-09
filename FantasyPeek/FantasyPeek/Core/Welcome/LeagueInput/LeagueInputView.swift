@@ -25,7 +25,7 @@ struct LeagueInputView: View {
 
                 Button("Load Sleeper League Info") {
                     Task {
-                        await viewModel.fetchSleeperLeagueInfo()
+                        await viewModel.loadSleeperLeagueInfo()
                     }
                 }
                 .buttonStyle(.borderedProminent)

@@ -7,10 +7,16 @@
 
 import Observation
 
-struct LeagueInfoViewModel {
+struct LeagueInfoViewModel: Equatable {
     let id: String
     let name: String
     let avatar: String?
+    
+    init(id: String, name: String, avatar: String?) {
+        self.id = id
+        self.name = name
+        self.avatar = avatar
+    }
 
     init(sleeperLeagueInfo: SleeperLeagueInfoModel) {
         id = sleeperLeagueInfo.leagueID
@@ -37,7 +43,7 @@ final class LeagueInputViewModel {
         case failure
     }
 
-    func fetchSleeperLeagueInfo() async {
+    func loadSleeperLeagueInfo() async {
         leagueInfo = nil
         viewState = .loading
 

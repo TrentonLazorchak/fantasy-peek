@@ -13,7 +13,7 @@ import Testing
 @Suite("TeamViewModelTests")
 struct TeamViewModelTests {
 
-    @Test("Tests the team view model summary")
+    @Test("Team view model summary")
     func testSummary() async {
         let team = TeamViewModel(
             userDisplayName: "UserDisplayName",

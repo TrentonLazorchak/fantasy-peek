@@ -1,6 +1,6 @@
 # 🏈 FantasyPeek
 
-FantasyPeek is your AI-powered fantasy football companion built for the modern iOS era. Currently supporting [Sleeper](https://sleeper.com), FantasyPeek lets you explore rosters and leagues in a beautifully simple UI, and then elevates your experience using Apple’s **Foundational Models** (iOS 26+ only).
+FantasyPeek is your AI-powered fantasy football companion built for the modern iOS era. Currently supporting [Sleeper](https://sleeper.com), FantasyPeek lets you explore rosters and leagues in a beautifully simple UI, and then elevates your experience using Apple’s **Foundation Models** (iOS 26+ only).
 
 ## ✨ Features
 
@@ -41,7 +41,7 @@ FantasyPeek is your AI-powered fantasy football companion built for the modern i
 
 ## 🧠 Powered by On-Device AI
 
-FantasyPeek uses **Foundational Models introduced in iOS 26** to create AI-enhanced features.
+FantasyPeek uses **Foundation Models introduced in iOS 26** to create AI-enhanced features.
 
 ## 🛣 Roadmap
 
